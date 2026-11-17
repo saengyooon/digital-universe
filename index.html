@@ -154,11 +154,33 @@ color:color,roughness:.65,metalness:.2,emissive:color,emissiveIntensity:.14
 const sphere=new THREE.Mesh(geometry,material);
 group.add(sphere);
 
-const glow=new THREE.Mesh(
-new THREE.SphereGeometry(1.35,32,32),
-new THREE.MeshBasicMaterial({color:color,transparent:true,opacity:.10,side:THREE.BackSide})
+// PLANET ATMOSPHERE GLOW
+const glow = new THREE.Mesh(
+  new THREE.SphereGeometry(index===3 ? 1.65 : 1.48, 48, 48),
+  new THREE.MeshBasicMaterial({
+    color: color,
+    transparent: true,
+    opacity: 0.16,
+    side: THREE.BackSide,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  })
 );
 group.add(glow);
+
+// OUTER ENERGY AURA
+const aura = new THREE.Mesh(
+  new THREE.SphereGeometry(index===3 ? 1.85 : 1.7, 32, 32),
+  new THREE.MeshBasicMaterial({
+    color: color,
+    transparent: true,
+    opacity: 0.045,
+    side: THREE.BackSide,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  })
+);
+group.add(aura);
 
 if(index===0||index===3){
 const ring=new THREE.Mesh(
@@ -250,8 +272,17 @@ nebulaClouds.forEach((cloud, i) => {
   cloud.position.x += Math.sin(t * 0.2 + i) * 0.001;
 });
 planets.forEach((p,i)=>{
-p.group.rotation.y=t*.12+i*.5;
-p.group.position.y=positions[i][1]+Math.sin(t*.7+i)*.22;
+  p.group.rotation.y=t*.12+i*.5;
+  p.group.position.y=positions[i][1]+Math.sin(t*.7+i)*.22;
+
+  p.group.children.forEach(child=>{
+    if(child.material && child.material.blending===THREE.AdditiveBlending){
+      child.material.opacity =
+        child.geometry.parameters.radius > 1.5
+        ? 0.045 + Math.sin(t*1.5+i)*0.018
+        : 0.16 + Math.sin(t*1.5+i)*0.04;
+    }
+  });
 });
 secret.rotation.x+=.01;
 secret.rotation.y+=.015;
