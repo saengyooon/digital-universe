@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DIGITAL UNIVERSE</title>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;600&display=swap');
 
@@ -35,6 +36,7 @@ h1 span{color:#9c83ff;text-shadow:0 0 35px #7755ff}
 .panel p{font-size:13px;line-height:1.8;color:#a5abc7}
 .close{margin-top:25px;padding:12px 25px;background:transparent;border:1px solid #8170d8;color:white;cursor:pointer;letter-spacing:2px;font-size:10px}
 #secret{position:absolute;top:16px;left:50%;transform:translateX(-50%);font-size:10px;color:#c9a7ff;letter-spacing:3px;display:none}
+
 @media(max-width:700px){
 .hero{top:27%;left:7%;right:7%}
 h1{font-size:47px}
@@ -47,8 +49,10 @@ header{top:22px}
 }
 </style>
 </head>
+
 <body>
 <div id="space"></div>
+
 <div class="overlay">
 <header>
 <div class="logo">D / UNIVERSE</div>
@@ -81,6 +85,7 @@ header{top:22px}
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <script>
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x03040b);
@@ -97,163 +102,178 @@ renderer.toneMappingExposure = 1.5;
 document.getElementById('space').appendChild(renderer.domElement);
 
 scene.add(new THREE.AmbientLight(0x6677bb,1.5));
+
 const sun = new THREE.PointLight(0xffffff,180,100);
 sun.position.set(-8,8,10);
 scene.add(sun);
 
+// STARS
 const stars = new THREE.BufferGeometry();
 const starPositions = [];
+
 for(let i=0;i<3500;i++){
-starPositions.push((Math.random()-.5)*180,(Math.random()-.5)*110,(Math.random()-.5)*120);
+  starPositions.push(
+    (Math.random()-.5)*180,
+    (Math.random()-.5)*110,
+    (Math.random()-.5)*120
+  );
 }
+
 stars.setAttribute('position',new THREE.Float32BufferAttribute(starPositions,3));
-const starField = new THREE.Points(stars,new THREE.PointsMaterial({color:0xb9c9ff,size:.13,transparent:true,opacity:.85}));
+
+const starField = new THREE.Points(
+  stars,
+  new THREE.PointsMaterial({
+    color:0xb9c9ff,
+    size:.13,
+    transparent:true,
+    opacity:.85
+  })
+);
 scene.add(starField);
+
 // COSMIC NEBULA CLOUDS
-function createNebula(color, x, y, z, size, opacity){
-  const geometry = new THREE.SphereGeometry(size, 32, 32);
+function createNebula(color,x,y,z,size,opacity){
+  const geometry = new THREE.SphereGeometry(size,32,32);
+
   const material = new THREE.MeshBasicMaterial({
-    color: color,
-    transparent: true,
-    opacity: opacity,
-    side: THREE.BackSide,
-    depthWrite: false
+    color:color,
+    transparent:true,
+    opacity:opacity,
+    side:THREE.BackSide,
+    depthWrite:false
   });
 
-  const cloud = new THREE.Mesh(geometry, material);
-  cloud.position.set(x, y, z);
-  cloud.scale.set(1.5, 0.8, 0.5);
+  const cloud = new THREE.Mesh(geometry,material);
+  cloud.position.set(x,y,z);
+  cloud.scale.set(1.5,0.8,0.5);
   scene.add(cloud);
+
   return cloud;
 }
 
 const nebulaClouds = [
-  createNebula(0x713bff, -8, 3, -12, 5, 0.13),
-  createNebula(0x176bff, 7, -3, -15, 6, 0.10),
-  createNebula(0xff36c7, 1, 7, -20, 5, 0.08),
-  createNebula(0x25d9d0, -3, -7, -18, 4, 0.08)
+  createNebula(0x713bff,-8,3,-12,5,0.13),
+  createNebula(0x176bff,7,-3,-15,6,0.10),
+  createNebula(0xff36c7,1,7,-20,5,0.08),
+  createNebula(0x25d9d0,-3,-7,-18,4,0.08)
 ];
-const planets=[];
-const colors=[0x8755ff,0x2378bd,0x30c9b0,0xe5a34d];
-const positions=[[-5,0,0],[0,2,-3],[5,-1,-2],[0,-4,-5]];
-const names=['NEBULA','VOID','DREAM','ORIGIN'];
-const descriptions=[
-'A mysterious world hidden inside a glowing cosmic nebula. Its secrets have waited for centuries.',
-'A silent planet where light disappears and unknown things awaken in the darkness.',
-'A lost paradise filled with strange energy and impossible landscapes.',
-'The beginning of everything. The source of the entire digital universe.'
+
+// PLANETS
+const planets = [];
+const colors = [0x8755ff,0x2378bd,0x30c9b0,0xe5a34d];
+const positions = [[-5,0,0],[0,2,-3],[5,-1,-2],[0,-4,-5]];
+const names = ['NEBULA','VOID','DREAM','ORIGIN'];
+
+const descriptions = [
+  'A mysterious world hidden inside a glowing cosmic nebula. Its secrets have waited for centuries.',
+  'A silent planet where light disappears and unknown things awaken in the darkness.',
+  'A lost paradise filled with strange energy and impossible landscapes.',
+  'The beginning of everything. The source of the entire digital universe.'
 ];
 
 function makePlanet(color,pos,index){
-const group=new THREE.Group();
-group.position.set(...pos);
-const geometry=new THREE.SphereGeometry(index===3?1.3:1.15,64,64);
-const material=new THREE.MeshStandardMaterial({
-color:color,roughness:.65,metalness:.2,emissive:color,emissiveIntensity:.14
-});
-const sphere=new THREE.Mesh(geometry,material);
-group.add(sphere);
+  const group = new THREE.Group();
+  group.position.set(...pos);
 
-// PLANET ATMOSPHERE GLOW
-const glow = new THREE.Mesh(
-  new THREE.SphereGeometry(index===3 ? 1.65 : 1.48, 48, 48),
-  new THREE.MeshBasicMaterial({
-    color: color,
-    transparent: true,
-    opacity: 0.16,
-    side: THREE.BackSide,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  })
-);
-group.add(glow);
+  const geometry = new THREE.SphereGeometry(index===3?1.3:1.15,64,64);
 
-// OUTER ENERGY AURA
-const aura = new THREE.Mesh(
-  new THREE.SphereGeometry(index===3 ? 1.85 : 1.7, 32, 32),
-  new THREE.MeshBasicMaterial({
-    color: color,
-    transparent: true,
-    opacity: 0.045,
-    side: THREE.BackSide,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  })
-);
-group.add(aura);
+  const material = new THREE.MeshStandardMaterial({
+    color:color,
+    roughness:.65,
+    metalness:.2,
+    emissive:color,
+    emissiveIntensity:.14
+  });
 
-if(index===0||index===3){
-const ring=new THREE.Mesh(
-new THREE.TorusGeometry(1.8,.035,8,120),
-new THREE.MeshBasicMaterial({color:color,transparent:true,opacity:.7})
-);
-ring.rotation.x=1.25;
-group.add(ring);
+  const sphere = new THREE.Mesh(geometry,material);
+  group.add(sphere);
+
+  // PLANET ATMOSPHERE GLOW
+  const glow = new THREE.Mesh(
+    new THREE.SphereGeometry(index===3?1.65:1.48,48,48),
+    new THREE.MeshBasicMaterial({
+      color:color,
+      transparent:true,
+      opacity:.16,
+      side:THREE.BackSide,
+      blending:THREE.AdditiveBlending,
+      depthWrite:false
+    })
+  );
+
+  glow.userData.glowType = 'inner';
+  group.add(glow);
+
+  // OUTER ENERGY AURA
+  const aura = new THREE.Mesh(
+    new THREE.SphereGeometry(index===3?1.85:1.7,32,32),
+    new THREE.MeshBasicMaterial({
+      color:color,
+      transparent:true,
+      opacity:.045,
+      side:THREE.BackSide,
+      blending:THREE.AdditiveBlending,
+      depthWrite:false
+    })
+  );
+
+  aura.userData.glowType = 'outer';
+  group.add(aura);
+
+  // PLANET RINGS
+  if(index===0||index===3){
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(1.8,.035,8,120),
+      new THREE.MeshBasicMaterial({
+        color:color,
+        transparent:true,
+        opacity:.7
+      })
+    );
+
+    ring.rotation.x=1.25;
+    group.add(ring);
+  }
+
+  scene.add(group);
+  planets.push({group,sphere,index});
 }
-scene.add(group);
-planets.push({group,sphere,index});
-}
+
 positions.forEach((p,i)=>makePlanet(colors[i],p,i));
+
 // COSMIC ENERGY PARTICLES
 const particleGroups = [];
 
-planets.forEach((planet, index) => {
+planets.forEach((planet,index)=>{
   const particleGeometry = new THREE.BufferGeometry();
   const particlePositions = [];
 
-  for(let i = 0; i < 180; i++){
-    const angle = Math.random() * Math.PI * 2;
-    const radius = 1.7 + Math.random() * 2.2;
+  for(let i=0;i<180;i++){
+    const angle = Math.random()*Math.PI*2;
+    const radius = 1.7+Math.random()*2.2;
 
     particlePositions.push(
-      Math.cos(angle) * radius,
-      (Math.random() - 0.5) * 1.2,
-      Math.sin(angle) * radius
+      Math.cos(angle)*radius,
+      (Math.random()-.5)*1.2,
+      Math.sin(angle)*radius
     );
   }
 
   particleGeometry.setAttribute(
     'position',
-    new THREE.Float32BufferAttribute(particlePositions, 3)
+    new THREE.Float32BufferAttribute(particlePositions,3)
   );
 
   const particleMaterial = new THREE.PointsMaterial({
-    color: colors[index],
-    size: 0.045,
-    transparent: true,
-    opacity: 0.8,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
+    color:colors[index],
+    size:.045,
+    transparent:true,
+    opacity:.8,
+    blending:THREE.AdditiveBlending,
+    depthWrite:false
   });
-// COSMIC PORTAL
-const portal = new THREE.Group();
-portal.position.set(0, 0, -8);
 
-const portalRing = new THREE.Mesh(
-  new THREE.TorusGeometry(2.2, 0.09, 16, 120),
-  new THREE.MeshBasicMaterial({
-    color: 0x9b65ff,
-    transparent: true,
-    opacity: 0.9,
-    blending: THREE.AdditiveBlending
-  })
-);
-
-portal.add(portalRing);
-
-const portalInner = new THREE.Mesh(
-  new THREE.CircleGeometry(2.08, 64),
-  new THREE.MeshBasicMaterial({
-    color: 0x302080,
-    transparent: true,
-    opacity: 0.18,
-    side: THREE.DoubleSide,
-    depthWrite: false
-  })
-);
-
-portal.add(portalInner);
-scene.add(portal);
   const particles = new THREE.Points(
     particleGeometry,
     particleMaterial
@@ -262,121 +282,223 @@ scene.add(portal);
   planet.group.add(particles);
   particleGroups.push(particles);
 });
-const secret=new THREE.Mesh(
-new THREE.IcosahedronGeometry(.35,1),
-new THREE.MeshStandardMaterial({color:0xffd2ff,emissive:0x9d42ff,emissiveIntensity:3})
+
+// COSMIC PORTAL
+const portal = new THREE.Group();
+portal.position.set(0,0,-8);
+
+const portalRing = new THREE.Mesh(
+  new THREE.TorusGeometry(2.2,.09,16,120),
+  new THREE.MeshBasicMaterial({
+    color:0x9b65ff,
+    transparent:true,
+    opacity:.9,
+    blending:THREE.AdditiveBlending
+  })
 );
+
+portal.add(portalRing);
+
+const portalInner = new THREE.Mesh(
+  new THREE.CircleGeometry(2.08,64),
+  new THREE.MeshBasicMaterial({
+    color:0x302080,
+    transparent:true,
+    opacity:.18,
+    side:THREE.DoubleSide,
+    depthWrite:false
+  })
+);
+
+portal.add(portalInner);
+scene.add(portal);
+
+// SECRET OBJECT
+const secret = new THREE.Mesh(
+  new THREE.IcosahedronGeometry(.35,1),
+  new THREE.MeshStandardMaterial({
+    color:0xffd2ff,
+    emissive:0x9d42ff,
+    emissiveIntensity:3
+  })
+);
+
 secret.position.set(8,5,-9);
 scene.add(secret);
 
-const raycaster=new THREE.Raycaster();
-const pointer=new THREE.Vector2();
-let selected=-1;
-let dragging=false,previousX=0,previousY=0;
-let rotationX=0,rotationY=0;
-let targetX=0,targetY=0;
-let zoomed=false;
+// INTERACTION
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+let selected = -1;
+let dragging = false;
+let previousX = 0;
+let previousY = 0;
+let rotationX = 0;
+let rotationY = 0;
+let targetX = 0;
+let targetY = 0;
+let zoomed = false;
 
 function chooseWorld(index){
-selected=index;
-const p=planets[index];
-targetX=-p.group.position.x*.28;
-targetY=-p.group.position.y*.25;
-zoomed=true;
-document.querySelectorAll('.world').forEach((b,i)=>b.classList.toggle('active',i===index));
-document.getElementById('planetTitle').textContent=names[index];
-document.getElementById('planetText').textContent=descriptions[index];
-document.getElementById('panel').style.display='block';
+  selected = index;
+
+  const p = planets[index];
+  targetX = -p.group.position.x*.28;
+  targetY = -p.group.position.y*.25;
+  zoomed = true;
+
+  document.querySelectorAll('.world').forEach((b,i)=>{
+    b.classList.toggle('active',i===index);
+  });
+
+  document.getElementById('planetTitle').textContent = names[index];
+  document.getElementById('planetText').textContent = descriptions[index];
+  document.getElementById('panel').style.display = 'block';
 }
+
 document.querySelectorAll('.world').forEach(b=>{
-b.addEventListener('click',()=>chooseWorld(Number(b.dataset.world)));
-});
-document.getElementById('close').onclick=()=>{
-document.getElementById('panel').style.display='none';
-zoomed=false;
-selected=-1;
-targetX=0;targetY=0;
-};
-document.getElementById('explore').onclick=()=>{
-document.getElementById('panel').style.display='none';
-zoomed=false;
-targetX=0;targetY=0;
-};
-
-renderer.domElement.addEventListener('pointerdown',e=>{
-dragging=true;previousX=e.clientX;previousY=e.clientY;
-});
-window.addEventListener('pointerup',()=>dragging=false);
-window.addEventListener('pointermove',e=>{
-if(dragging){
-rotationY+=(e.clientX-previousX)*.004;
-rotationX+=(e.clientY-previousY)*.003;
-previousX=e.clientX;previousY=e.clientY;
-}
-});
-renderer.domElement.addEventListener('click',e=>{
-pointer.x=(e.clientX/innerWidth)*2-1;
-pointer.y=-(e.clientY/innerHeight)*2+1;
-raycaster.setFromCamera(pointer,camera);
-const hits=raycaster.intersectObjects(scene.children,true);
-if(hits.length){
-let obj=hits[0].object;
-while(obj.parent&&!planets.some(p=>p.group===obj))obj=obj.parent;
-const found=planets.find(p=>p.group===obj);
-if(found)chooseWorld(found.index);
-if(hits[0].object===secret){
-document.getElementById('secret').style.display='block';
-setTimeout(()=>document.getElementById('secret').style.display='none',4000);
-}
-}
-});
-
-function animate(){
-requestAnimationFrame(animate);
-const t=performance.now()*.001;
-portal.rotation.z = t * 0.18;
-portalRing.material.opacity = 0.65 + Math.sin(t * 2) * 0.25;
-portal.scale.setScalar(1 + Math.sin(t * 1.5) * 0.035);
-particleGroups.forEach((particles, i) => {
-  particles.rotation.y = t * (0.18 + i * 0.04);
-  particles.rotation.x = Math.sin(t * 0.3 + i) * 0.08;
-});
-nebulaClouds.forEach((cloud, i) => {
-  cloud.rotation.z = Math.sin(t * 0.15 + i) * 0.12;
-  cloud.position.x += Math.sin(t * 0.2 + i) * 0.001;
-});
-planets.forEach((p,i)=>{
-  p.group.rotation.y=t*.12+i*.5;
-  p.group.position.y=positions[i][1]+Math.sin(t*.7+i)*.22;
-
-  p.group.children.forEach(child=>{
-    if(child.material && child.material.blending===THREE.AdditiveBlending){
-      child.material.opacity =
-        child.geometry.parameters.radius > 1.5
-        ? 0.045 + Math.sin(t*1.5+i)*0.018
-        : 0.16 + Math.sin(t*1.5+i)*0.04;
-    }
+  b.addEventListener('click',()=>{
+    chooseWorld(Number(b.dataset.world));
   });
 });
-secret.rotation.x+=.01;
-secret.rotation.y+=.015;
-secret.position.y=5+Math.sin(t)*.5;
-starField.rotation.y+=.00012;
-scene.rotation.y+=(rotationY-scene.rotation.y)*.04;
-scene.rotation.x+=(rotationX-scene.rotation.x)*.04;
-const destination=zoomed?12:19;
-camera.position.z+=(destination-camera.position.z)*.035;
-camera.position.x+=(targetX-camera.position.x)*.025;
-camera.position.y+=(2+targetY-camera.position.y)*.025;
-camera.lookAt(0,0,0);
-renderer.render(scene,camera);
+
+document.getElementById('close').onclick=()=>{
+  document.getElementById('panel').style.display='none';
+  zoomed=false;
+  selected=-1;
+  targetX=0;
+  targetY=0;
+};
+
+document.getElementById('explore').onclick=()=>{
+  document.getElementById('panel').style.display='none';
+  zoomed=false;
+  targetX=0;
+  targetY=0;
+};
+
+// DRAG TO ROTATE
+renderer.domElement.addEventListener('pointerdown',e=>{
+  dragging=true;
+  previousX=e.clientX;
+  previousY=e.clientY;
+});
+
+window.addEventListener('pointerup',()=>{
+  dragging=false;
+});
+
+window.addEventListener('pointermove',e=>{
+  if(dragging){
+    rotationY+=(e.clientX-previousX)*.004;
+    rotationX+=(e.clientY-previousY)*.003;
+    previousX=e.clientX;
+    previousY=e.clientY;
+  }
+});
+
+// CLICK ON PLANETS AND SECRET
+renderer.domElement.addEventListener('click',e=>{
+  pointer.x=(e.clientX/innerWidth)*2-1;
+  pointer.y=-(e.clientY/innerHeight)*2+1;
+
+  raycaster.setFromCamera(pointer,camera);
+
+  const hits=raycaster.intersectObjects(scene.children,true);
+
+  if(hits.length){
+    let obj=hits[0].object;
+
+    while(obj.parent&&!planets.some(p=>p.group===obj)){
+      obj=obj.parent;
+    }
+
+    const found=planets.find(p=>p.group===obj);
+
+    if(found){
+      chooseWorld(found.index);
+    }
+
+    if(hits[0].object===secret){
+      document.getElementById('secret').style.display='block';
+
+      setTimeout(()=>{
+        document.getElementById('secret').style.display='none';
+      },4000);
+    }
+  }
+});
+
+// ANIMATION
+function animate(){
+  requestAnimationFrame(animate);
+
+  const t=performance.now()*.001;
+
+  // PORTAL ANIMATION
+  portal.rotation.z=t*.18;
+  portalRing.material.opacity=.65+Math.sin(t*2)*.25;
+  portal.scale.setScalar(1+Math.sin(t*1.5)*.035);
+
+  // PARTICLE ANIMATION
+  particleGroups.forEach((particles,i)=>{
+    particles.rotation.y=t*(.18+i*.04);
+    particles.rotation.x=Math.sin(t*.3+i)*.08;
+  });
+
+  // NEBULA ANIMATION
+  nebulaClouds.forEach((cloud,i)=>{
+    cloud.rotation.z=Math.sin(t*.15+i)*.12;
+    cloud.position.x+=Math.sin(t*.2+i)*.001;
+  });
+
+  // PLANET ANIMATION
+  planets.forEach((p,i)=>{
+    p.group.rotation.y=t*.12+i*.5;
+    p.group.position.y=positions[i][1]+Math.sin(t*.7+i)*.22;
+
+    p.group.children.forEach(child=>{
+      if(child.userData.glowType==='inner'){
+        child.material.opacity=.16+Math.sin(t*1.5+i)*.04;
+      }
+
+      if(child.userData.glowType==='outer'){
+        child.material.opacity=.045+Math.sin(t*1.5+i)*.018;
+      }
+    });
+  });
+
+  // SECRET ANIMATION
+  secret.rotation.x+=.01;
+  secret.rotation.y+=.015;
+  secret.position.y=5+Math.sin(t)*.5;
+
+  // STAR MOVEMENT
+  starField.rotation.y+=.00012;
+
+  // CAMERA MOVEMENT
+  scene.rotation.y+=(rotationY-scene.rotation.y)*.04;
+  scene.rotation.x+=(rotationX-scene.rotation.x)*.04;
+
+  const destination=zoomed?12:19;
+
+  camera.position.z+=(destination-camera.position.z)*.035;
+  camera.position.x+=(targetX-camera.position.x)*.025;
+  camera.position.y+=(2+targetY-camera.position.y)*.025;
+
+  camera.lookAt(0,0,0);
+
+  renderer.render(scene,camera);
 }
+
 animate();
 
+// RESPONSIVE SCREEN
 window.addEventListener('resize',()=>{
-camera.aspect=innerWidth/innerHeight;
-camera.updateProjectionMatrix();
-renderer.setSize(innerWidth,innerHeight);
+  camera.aspect=innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
 });
 </script>
 </body>
