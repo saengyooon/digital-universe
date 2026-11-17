@@ -109,7 +109,30 @@ starPositions.push((Math.random()-.5)*180,(Math.random()-.5)*110,(Math.random()-
 stars.setAttribute('position',new THREE.Float32BufferAttribute(starPositions,3));
 const starField = new THREE.Points(stars,new THREE.PointsMaterial({color:0xb9c9ff,size:.13,transparent:true,opacity:.85}));
 scene.add(starField);
+// COSMIC NEBULA CLOUDS
+function createNebula(color, x, y, z, size, opacity){
+  const geometry = new THREE.SphereGeometry(size, 32, 32);
+  const material = new THREE.MeshBasicMaterial({
+    color: color,
+    transparent: true,
+    opacity: opacity,
+    side: THREE.BackSide,
+    depthWrite: false
+  });
 
+  const cloud = new THREE.Mesh(geometry, material);
+  cloud.position.set(x, y, z);
+  cloud.scale.set(1.5, 0.8, 0.5);
+  scene.add(cloud);
+  return cloud;
+}
+
+const nebulaClouds = [
+  createNebula(0x713bff, -8, 3, -12, 5, 0.13),
+  createNebula(0x176bff, 7, -3, -15, 6, 0.10),
+  createNebula(0xff36c7, 1, 7, -20, 5, 0.08),
+  createNebula(0x25d9d0, -3, -7, -18, 4, 0.08)
+];
 const planets=[];
 const colors=[0x8755ff,0x2378bd,0x30c9b0,0xe5a34d];
 const positions=[[-5,0,0],[0,2,-3],[5,-1,-2],[0,-4,-5]];
@@ -222,6 +245,10 @@ setTimeout(()=>document.getElementById('secret').style.display='none',4000);
 function animate(){
 requestAnimationFrame(animate);
 const t=performance.now()*.001;
+nebulaClouds.forEach((cloud, i) => {
+  cloud.rotation.z = Math.sin(t * 0.15 + i) * 0.12;
+  cloud.position.x += Math.sin(t * 0.2 + i) * 0.001;
+});
 planets.forEach((p,i)=>{
 p.group.rotation.y=t*.12+i*.5;
 p.group.position.y=positions[i][1]+Math.sin(t*.7+i)*.22;
