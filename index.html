@@ -453,16 +453,6 @@ window.addEventListener("mousemove", (event) => {
 
 function updatePlanetHover() {
   raycaster.setFromCamera(mouse, camera);
-  const cursorPosition = new THREE.Vector3(mouse.x, mouse.y, 0.5);
-cursorPosition.unproject(camera);
-
-const direction = cursorPosition.sub(camera.position).normalize();
-
-const targetPosition = camera.position.clone().add(
-  direction.multiplyScalar(5)
-);
-
-cursorGlow.position.lerp(targetPosition, 0.15);
 
   const hits = raycaster.intersectObjects(
     planets.map(p => p.mesh),
