@@ -469,36 +469,8 @@ function updatePlanetHover() {
   });
 }
 function animate(){
-
-window.addEventListener("mousemove", (event) => {
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-});
-
-function updatePlanetHover() {
-  raycaster.setFromCamera(mouse, camera);
-
-  const hits = raycaster.intersectObjects(
-    planets.map(p => p.mesh),
-    true
-  );
-
-  const newHovered = hits.length ? hits[0].object : null;
-
-  planets.forEach(p => {
-    const isHovered = newHovered &&
-      (p.mesh === newHovered || p.mesh.children.includes(newHovered));
-
-    const target = isHovered ? 1.12 : 1;
-
-    p.mesh.scale.lerp(
-      new THREE.Vector3(target, target, target),
-      0.12
-    );
-  });
-}
   requestAnimationFrame(animate);
-    const t=performance.now()*.001;
+  const t=performance.now()*.001;
 
   // PORTAL ANIMATION
   window.portal.rotation.z=t*.18;
