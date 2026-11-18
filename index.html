@@ -608,7 +608,7 @@ style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%); z-inde
   <h3>GALACTIC LIGHT</h3>
   <p>Свет далёкой галактики</p>
   <div class="wallpaper-info">
-    <span>4K VIDEO WALLPAPER</span>
+    <span>4K WALLPAPER</span>
     <span class="premium-label">PREMIUM</span>
   </div>
   <button class="premium-btn">UNLOCK · 99 ₽</button>
@@ -676,7 +676,11 @@ margin-top: 0;
   background: #111128;
   border: 1px solid #34305d;
   border-radius: 16px;
-  padding: 15px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
   transition: transform .3s, border-color .3s;
 }
 
@@ -686,13 +690,19 @@ margin-top: 0;
 }
 
 .art-placeholder {
-  height: 190px;
+  height: 220px;
   border-radius: 10px;
   background: radial-gradient(circle at 50% 45%, #55418d, #17172f 55%, #080817);
   display: grid;
   place-items: center;
   font-size: 65px;
   color: #d8c7ff;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+
+.art-card:hover .art-placeholder {
+  transform: scale(1.04);
 }
 .nebula-bg {
   background-image: url('nebula-dream-2.png');
@@ -743,6 +753,7 @@ margin-top: 0;
 .download-btn,
 .premium-btn {
   width: 100%;
+  margin-top: auto;
   padding: 13px;
   border-radius: 8px;
   border: 1px solid #8b5cf6;
