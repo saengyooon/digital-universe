@@ -39,6 +39,24 @@ canvas{
   height:100vh;
 }
 header{position:absolute;top:35px;left:5%;right:5%;display:flex;justify-content:space-between;align-items:center}
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.main-nav a {
+  color: #9296b8;
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 2px;
+  transition: 0.3s;
+}
+
+.main-nav a:hover {
+  color: #c4a2ff;
+  text-shadow: 0 0 15px #9b65ff;
+}
 .logo{font-family:Orbitron,sans-serif;font-size:17px;letter-spacing:5px;color:#d9d5ff}
 .status{font-size:10px;letter-spacing:3px;color:#8c91b8}
 .status span{color:#73f5dd}
@@ -70,6 +88,20 @@ h1{font-size:47px}
 .hint{bottom:38px;left:7%;font-size:8px}
 .footer{display:none}
 header{top:22px}
+.main-nav {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.main-nav a {
+  font-size: 8px;
+  letter-spacing: 1px;
+}
 }
 </style>
 </head>
@@ -79,8 +111,16 @@ header{top:22px}
 
 <div class="overlay">
 <header>
-<div class="logo">D / UNIVERSE</div>
-<div class="status"><span>●</span> SYSTEM ONLINE</div>
+  <div class="logo">D / UNIVERSE</div>
+
+  <nav class="main-nav">
+    <a href="#space">HOME</a>
+    <a href="#space-gallery">WALLPAPERS</a>
+    <a href="#favorites">FAVORITES</a>
+    <a href="#account">ACCOUNT</a>
+  </nav>
+
+  <div class="status"><span>●</span> SYSTEM ONLINE</div>
 </header>
 
 <div class="hero">
