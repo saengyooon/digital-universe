@@ -582,25 +582,37 @@ style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%); z-inde
     <div class="gallery-grid">
 
       <div class="art-card">
-        <div class="art-placeholder nebula-bg"></div>
-        <h3>NEBULA DREAM</h3>
-        <p>Космическая туманность</p>
-        <span>СКОРО</span>
-      </div>
+  <div class="art-placeholder nebula-bg"></div>
+  <h3>NEBULA DREAM</h3>
+  <p>Космическая туманность</p>
+  <div class="wallpaper-info">
+    <span>1920 × 1080 · FULL HD</span>
+    <span class="free-label">FREE</span>
+  </div>
+  <button class="download-btn">DOWNLOAD</button>
+</div>
 
       <div class="art-card">
-        <div class="art-placeholder planet-bg"></div>
-        <h3>UNKNOWN PLANET</h3>
-        <p>Планета неизведанного мира</p>
-        <span>СКОРО</span>
-      </div>
+  <div class="art-placeholder planet-bg"></div>
+  <h3>UNKNOWN PLANET</h3>
+  <p>Планета неизведанного мира</p>
+  <div class="wallpaper-info">
+    <span>3840 × 2160 · 4K</span>
+    <span class="premium-label">PREMIUM</span>
+  </div>
+  <button class="premium-btn">UNLOCK · 99 ₽</button>
+</div>
 
       <div class="art-card">
-       <div class="art-placeholder galaxy-bg"></div>
-        <h3>GALACTIC LIGHT</h3>
-        <p>Свет далёкой галактики</p>
-        <span>СКОРО</span>
-      </div>
+  <div class="art-placeholder galaxy-bg"></div>
+  <h3>GALACTIC LIGHT</h3>
+  <p>Свет далёкой галактики</p>
+  <div class="wallpaper-info">
+    <span>4K VIDEO WALLPAPER</span>
+    <span class="premium-label">PREMIUM</span>
+  </div>
+  <button class="premium-btn">UNLOCK · 99 ₽</button>
+</div>
 
     </div>
 
@@ -707,7 +719,47 @@ margin-top: 0;
   color: #aaaac4;
   font-size: 13px;
 }
+.wallpaper-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #b8b8d0;
+}
 
+.free-label {
+  color: #4ade80;
+  font-weight: bold;
+}
+
+.premium-label {
+  color: #c4a2ff;
+  font-weight: bold;
+}
+
+.download-btn,
+.premium-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 8px;
+  border: 1px solid #8b5cf6;
+  background: #17102d;
+  color: white;
+  cursor: pointer;
+  letter-spacing: 2px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.download-btn:hover,
+.premium-btn:hover {
+  background: #8b5cf6;
+  box-shadow: 0 0 20px #8b5cf6;
+  transform: translateY(-2px);
+}
 .art-card span {
   display: inline-block;
   margin: 12px;
