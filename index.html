@@ -11,9 +11,29 @@
 
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#03040b;color:white;font-family:Inter,sans-serif;overflow:hidden}
-#space{position:fixed;inset:0;z-index:0}
-canvas{display:block}
-.overlay{position:fixed;inset:0;z-index:2;pointer-events:none}
+#space{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+}
+
+body{
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+canvas{
+  display:block;
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  height:100vh;
+}
 header{position:absolute;top:35px;left:5%;right:5%;display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:Orbitron,sans-serif;font-size:17px;letter-spacing:5px;color:#d9d5ff}
 .status{font-size:10px;letter-spacing:3px;color:#8c91b8}
