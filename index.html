@@ -441,10 +441,34 @@ renderer.domElement.addEventListener('click',e=>{
 });
 
 // ANIMATION
+  // PLANET HOVER EFFECT
+const hoverRaycaster = new THREE.Raycaster();
+const hoverMouse = new THREE.Vector2();
+
+window.addEventListener('mousemove', (event) => {
+  hoverMouse.x = (event.clientX / innerWidth) * 2 - 1;
+  hoverMouse.y = -(event.clientY / innerHeight) * 2 + 1;
+});
+
+function updatePlanetHover() {
+  hoverRaycaster.setFromCamera(hoverMouse, camera);
+
+  const hits = hoverRaycaster.intersectObjects(
+    planets.map(p => p.sphere)
+  );
+
+  const hovered = hits.length ? hits[0].object : null;
+
+  planets.forEach(p => {
+    const target = p.sphere === hovered ? 1.12 : 1;
+
+    p.group.scale.lerp(
+      new THREE.Vector3(target, target, target),
+      0.12
+    );
+  });
+}
 function animate(){
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-let hoveredPlanet = null;
 
 window.addEventListener("mousemove", (event) => {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
