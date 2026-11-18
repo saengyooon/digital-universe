@@ -601,68 +601,6 @@ window.addEventListener('resize',()=>{
   renderer.setSize(innerWidth,innerHeight);
 });
 </script>
-<script>
-const favoriteButtons = document.querySelectorAll('.favorite-btn');
-const favoritesList = document.getElementById('favorites-list');
-
-function getFavorites() {
-  return JSON.parse(localStorage.getItem('du-favorites') || '[]');
-}
-
-function saveFavorites(favorites) {
-  localStorage.setItem('du-favorites', JSON.stringify(favorites));
-}
-
-function renderFavorites() {
-  const favorites = getFavorites();
-  favoritesList.innerHTML = '';
-
-  favoritesList.style.display = 'grid';
-  favoritesList.style.gridTemplateColumns = 'repeat(auto-fit, minmax(230px, 1fr))';
-  favoritesList.style.gap = '25px';
-  favoritesList.style.maxWidth = '1100px';
-  favoritesList.style.margin = '30px auto 0';
-
-  favorites.forEach(id => {
-    const button = document.querySelector('.favorite-btn[data-id="' + id + '"]');
-
-    if (button) {
-      const card = button.closest('.art-card').cloneNode(true);
-      card.querySelector('.favorite-btn').remove();
-      favoritesList.appendChild(card);
-    }
-  });
-
-  if (favorites.length === 0) {
-    favoritesList.innerHTML = '<p style="color:#9296b8; grid-column:1/-1;">Пока здесь пусто. Нажми ♡ на понравившихся обоях.</p>';
-  }
-}
-
-favoriteButtons.forEach(button => {
-  const id = button.dataset.id;
-
-  if (getFavorites().includes(id)) {
-    button.textContent = '♥';
-  }
-
-  button.addEventListener('click', () => {
-    let favorites = getFavorites();
-
-    if (favorites.includes(id)) {
-      favorites = favorites.filter(item => item !== id);
-      button.textContent = '♡';
-    } else {
-      favorites.push(id);
-      button.textContent = '♥';
-    }
-
-    saveFavorites(favorites);
-    renderFavorites();
-  });
-});
-
-renderFavorites();
-</script>
 <button onclick="document.getElementById('space-gallery').scrollIntoView({behavior:'smooth'})"
 style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%); z-index:9999; padding:15px 35px; border:1px solid #8b5cf6; border-radius:30px; background:rgba(20,10,50,0.85); color:white; font-size:15px; cursor:pointer;">
   EXPLORE GALLERY ↓
@@ -934,5 +872,67 @@ margin-top: 0;
   letter-spacing: 3px;
 }
 </style>
+<script>
+const favoriteButtons = document.querySelectorAll('.favorite-btn');
+const favoritesList = document.getElementById('favorites-list');
+
+function getFavorites() {
+  return JSON.parse(localStorage.getItem('du-favorites') || '[]');
+}
+
+function saveFavorites(favorites) {
+  localStorage.setItem('du-favorites', JSON.stringify(favorites));
+}
+
+function renderFavorites() {
+  const favorites = getFavorites();
+  favoritesList.innerHTML = '';
+
+  favoritesList.style.display = 'grid';
+  favoritesList.style.gridTemplateColumns = 'repeat(auto-fit, minmax(230px, 1fr))';
+  favoritesList.style.gap = '25px';
+  favoritesList.style.maxWidth = '1100px';
+  favoritesList.style.margin = '30px auto 0';
+
+  favorites.forEach(id => {
+    const button = document.querySelector('.favorite-btn[data-id="' + id + '"]');
+
+    if (button) {
+      const card = button.closest('.art-card').cloneNode(true);
+      card.querySelector('.favorite-btn').remove();
+      favoritesList.appendChild(card);
+    }
+  });
+
+  if (favorites.length === 0) {
+    favoritesList.innerHTML = '<p style="color:#9296b8; grid-column:1/-1;">Пока здесь пусто. Нажми ♡ на понравившихся обоях.</p>';
+  }
+}
+
+favoriteButtons.forEach(button => {
+  const id = button.dataset.id;
+
+  if (getFavorites().includes(id)) {
+    button.textContent = '♥';
+  }
+
+  button.addEventListener('click', () => {
+    let favorites = getFavorites();
+
+    if (favorites.includes(id)) {
+      favorites = favorites.filter(item => item !== id);
+      button.textContent = '♡';
+    } else {
+      favorites.push(id);
+      button.textContent = '♥';
+    }
+
+    saveFavorites(favorites);
+    renderFavorites();
+  });
+});
+
+renderFavorites();
+</script>
 </body>
 </html>
