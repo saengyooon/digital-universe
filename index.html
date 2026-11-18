@@ -10,9 +10,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;600&display=swap');
 
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#03040b;color:white;font-family:Inter,sans-serif;overflow:hidden}
+body{
+  background:#03040b;
+  color:white;
+  font-family:Inter,sans-serif;
+}
 #space{
-  position:fixed;
+  position:absolute;
   inset:0;
   z-index:0;
   pointer-events:none;
@@ -21,6 +25,7 @@ body{background:#03040b;color:white;font-family:Inter,sans-serif;overflow:hidden
 body{
   overflow-x:hidden;
   overflow-y:auto;
+  min-height:100vh;
 }
 
 canvas{
@@ -559,6 +564,7 @@ window.addEventListener('resize',()=>{
 </script>
   
 <!-- DIGITAL UNIVERSE SHOP -->
+  <div style="height:100vh;"></div>
 <section id="space-gallery">
   <div class="gallery-container">
     <div class="gallery-label">DIGITAL ART COLLECTION</div>
