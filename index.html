@@ -129,11 +129,14 @@ header{top:22px}
   <div class="logo">D / UNIVERSE</div>
 
   <nav class="main-nav">
-    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">HOME</a>
-<a href="#space-gallery">WALLPAPERS</a>
-    <a href="#favorites">FAVORITES</a>
-    <a href="#account">ACCOUNT</a>
-  </nav>
+  <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">HOME</a>
+
+  <a href="#space-gallery" onclick="document.getElementById('space-gallery').scrollIntoView({behavior:'smooth'}); return false;">WALLPAPERS</a>
+
+  <a href="#favorites" onclick="document.getElementById('favorites').scrollIntoView({behavior:'smooth'}); return false;">FAVORITES</a>
+
+  <a href="#account" onclick="alert('Личный кабинет скоро появится!'); return false;">ACCOUNT</a>
+</nav>
 
   <div class="status"><span>●</span> SYSTEM ONLINE</div>
 </header>
