@@ -327,6 +327,16 @@ secret.position.set(8,5,-9);
 scene.add(secret);
 
 // INTERACTION
+const cursorGlow = new THREE.Mesh(
+  new THREE.SphereGeometry(0.08, 16, 16),
+  new THREE.MeshBasicMaterial({
+    color: 0x66ccff,
+    transparent: true,
+    opacity: 0.8
+  })
+);
+
+scene.add(cursorGlow);
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
@@ -443,6 +453,16 @@ window.addEventListener("mousemove", (event) => {
 
 function updatePlanetHover() {
   raycaster.setFromCamera(mouse, camera);
+  const cursorPosition = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+cursorPosition.unproject(camera);
+
+const direction = cursorPosition.sub(camera.position).normalize();
+
+const targetPosition = camera.position.clone().add(
+  direction.multiplyScalar(5)
+);
+
+cursorGlow.position.lerp(targetPosition, 0.15);
 
   const hits = raycaster.intersectObjects(
     planets.map(p => p.mesh),
