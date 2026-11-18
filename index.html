@@ -43,7 +43,17 @@ header,
 header a {
   pointer-events:auto;
 }
-header{position:absolute;top:35px;left:5%;right:5%;display:flex;justify-content:space-between;align-items:center}
+header {
+  position: fixed;
+  top: 35px;
+  left: 5%;
+  right: 5%;
+  z-index: 10000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: auto;
+}
 .main-nav {
   display: flex;
   align-items: center;
