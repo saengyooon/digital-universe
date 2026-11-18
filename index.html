@@ -749,7 +749,7 @@ style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%); z-inde
 <style>
 #space-gallery {
   position: relative;
-z-index: 100;
+z-index: 1000;
 display: block;
 width: 100%;
 min-height: 500px;
@@ -760,7 +760,12 @@ margin-top: 0;
   font-family: Arial, sans-serif;
   text-align: center;
 }
-
+#space-gallery button,
+#space-gallery a {
+  pointer-events: auto;
+  position: relative;
+  z-index: 1001;
+}
 .gallery-container {
   max-width: 1100px;
   margin: auto;
