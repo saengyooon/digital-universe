@@ -537,5 +537,144 @@ window.addEventListener('resize',()=>{
   renderer.setSize(innerWidth,innerHeight);
 });
 </script>
+  
+<!-- DIGITAL UNIVERSE SHOP -->
+<section id="space-gallery">
+  <div class="gallery-container">
+    <div class="gallery-label">DIGITAL ART COLLECTION</div>
+
+    <h1>DIGITAL UNIVERSE</h1>
+    <h2>SPACE WALLPAPERS</h2>
+
+    <p class="gallery-description">
+      Открой для себя красоту далёких миров.
+      Коллекция авторских космических обоев.
+    </p>
+
+    <div class="gallery-grid">
+
+      <div class="art-card">
+        <div class="art-placeholder">✦</div>
+        <h3>NEBULA DREAM</h3>
+        <p>Космическая туманность</p>
+        <span>СКОРО</span>
+      </div>
+
+      <div class="art-card">
+        <div class="art-placeholder">◉</div>
+        <h3>UNKNOWN PLANET</h3>
+        <p>Планета неизведанного мира</p>
+        <span>СКОРО</span>
+      </div>
+
+      <div class="art-card">
+        <div class="art-placeholder">✧</div>
+        <h3>GALACTIC LIGHT</h3>
+        <p>Свет далёкой галактики</p>
+        <span>СКОРО</span>
+      </div>
+
+    </div>
+
+    <div class="gallery-footer">
+      DIGITAL UNIVERSE © 2026
+    </div>
+  </div>
+</section>
+
+<style>
+#space-gallery {
+  position: relative;
+  z-index: 10;
+  background: #080817;
+  color: white;
+  padding: 85px 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.gallery-container {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.gallery-label {
+  color: #a78bfa;
+  letter-spacing: 5px;
+  font-size: 12px;
+}
+
+#space-gallery h1 {
+  font-size: clamp(32px, 6vw, 64px);
+  letter-spacing: 5px;
+  margin: 20px 0 5px;
+}
+
+#space-gallery h2 {
+  color: #a78bfa;
+  letter-spacing: 7px;
+  font-size: 18px;
+}
+
+.gallery-description {
+  color: #b8b8d0;
+  line-height: 1.7;
+  margin: 25px auto 50px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+}
+
+.art-card {
+  background: #111128;
+  border: 1px solid #34305d;
+  border-radius: 16px;
+  padding: 15px;
+  transition: transform .3s, border-color .3s;
+}
+
+.art-card:hover {
+  transform: translateY(-7px);
+  border-color: #a78bfa;
+}
+
+.art-placeholder {
+  height: 190px;
+  border-radius: 10px;
+  background: radial-gradient(circle at 50% 45%, #55418d, #17172f 55%, #080817);
+  display: grid;
+  place-items: center;
+  font-size: 65px;
+  color: #d8c7ff;
+}
+
+.art-card h3 {
+  letter-spacing: 2px;
+  font-size: 16px;
+}
+
+.art-card p {
+  color: #aaaac4;
+  font-size: 13px;
+}
+
+.art-card span {
+  display: inline-block;
+  margin: 12px;
+  color: #a78bfa;
+  letter-spacing: 3px;
+  font-size: 11px;
+}
+
+.gallery-footer {
+  margin-top: 65px;
+  color: #777791;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+</style>
 </body>
 </html>
