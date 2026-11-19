@@ -141,6 +141,11 @@ header{top:22px}
 #space-gallery .catalog-count{letter-spacing:2px}
 @media(max-width:600px){#space-gallery .gallery-grid{grid-template-columns:1fr;gap:18px}#space-gallery .art-card{padding:13px}#space-gallery .art-placeholder{aspect-ratio:16/9}#space-gallery .favorite-btn{top:20px;right:20px}}
 
+
+.catalog-sort{background:rgba(10,12,28,.85);color:#fff;border:1px solid rgba(170,150,255,.28);border-radius:12px;padding:12px 14px;font:inherit;letter-spacing:1px;outline:none;cursor:pointer}
+.catalog-sort option{background:#080a16;color:white}
+@media(max-width:700px){.catalog-sort{width:100%}}
+
 </style>
 </head>
 
@@ -667,6 +672,13 @@ window.addEventListener('resize',()=>{
         <button class="catalog-filter" data-filter="free">FREE</button>
         <button class="catalog-filter" data-filter="premium">PREMIUM</button>
       </div>
+      <select id="catalog-sort" class="catalog-sort" aria-label="Sort wallpapers">
+        <option value="featured">FEATURED</option>
+        <option value="name-asc">NAME A–Z</option>
+        <option value="name-desc">NAME Z–A</option>
+        <option value="free-first">FREE FIRST</option>
+        <option value="premium-first">PREMIUM FIRST</option>
+      </select>
       <div class="catalog-count" id="catalog-count">9 WALLPAPERS</div>
     </div>
 \n    <div class="gallery-grid">
@@ -1105,7 +1117,9 @@ renderFavorites();
   const filterButtons = document.querySelectorAll('.catalog-filter');
   const cards = document.querySelectorAll('#space-gallery .art-card');
   const count = document.getElementById('catalog-count');
+  const sortSelect = document.getElementById('catalog-sort');
   const grid = document.querySelector('#space-gallery .gallery-grid');
+  const originalOrder = Array.from(cards);
   if (!searchInput || !grid || !cards.length) return;
 
   let activeFilter = 'all';
@@ -1126,6 +1140,17 @@ renderFavorites();
     });
 
     count.textContent = visible + (visible === 1 ? ' WALLPAPER' : ' WALLPAPERS');
+
+    const mode = sortSelect ? sortSelect.value : 'featured';
+    const ordered = Array.from(cards).sort((a,b) => {
+      const an = (a.dataset.title || '').toLowerCase(), bn = (b.dataset.title || '').toLowerCase();
+      if(mode === 'name-asc') return an.localeCompare(bn);
+      if(mode === 'name-desc') return bn.localeCompare(an);
+      if(mode === 'free-first') return (a.dataset.category === 'free' ? 0 : 1) - (b.dataset.category === 'free' ? 0 : 1);
+      if(mode === 'premium-first') return (a.dataset.category === 'premium' ? 0 : 1) - (b.dataset.category === 'premium' ? 0 : 1);
+      return originalOrder.indexOf(a) - originalOrder.indexOf(b);
+    });
+    ordered.forEach(card => grid.appendChild(card));
 
     if(!visible){
       if(!emptyMessage){
@@ -1149,6 +1174,7 @@ renderFavorites();
   });
 
   searchInput.addEventListener('input', updateCatalog);
+  if(sortSelect) sortSelect.addEventListener('change', updateCatalog);
   updateCatalog();
 })();
 </script>
