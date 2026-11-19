@@ -644,7 +644,7 @@ window.addEventListener('resize',()=>{
         <button class="catalog-filter" data-filter="free">FREE</button>
         <button class="catalog-filter" data-filter="premium">PREMIUM</button>
       </div>
-      <div class="catalog-count" id="catalog-count">3 WALLPAPERS</div>
+      <div class="catalog-count" id="catalog-count">9 WALLPAPERS</div>
     </div>
 \n    <div class="gallery-grid">
 
@@ -682,6 +682,31 @@ window.addEventListener('resize',()=>{
     <span class="premium-label">PREMIUM</span>
   </div>
   <button class="premium-btn">UNLOCK · 99 ₽</button>
+</div>
+
+      <div class="art-card" data-category="free" data-title="moon horizon">
+  <button class="favorite-btn" data-id="moon">♡</button><div class="art-placeholder moon-bg"></div>
+  <h3>MOON HORIZON</h3><p>Лунный горизонт и сияние звёзд</p><div class="wallpaper-info"><span>1920 × 1080 · FULL HD</span><span class="free-label">FREE</span></div><button class="download-btn">DOWNLOAD</button>
+</div>
+      <div class="art-card" data-category="premium" data-title="purple orbit">
+  <button class="favorite-btn" data-id="orbit">♡</button><div class="art-placeholder orbit-bg"></div>
+  <h3>PURPLE ORBIT</h3><p>Фиолетовый мир на орбите</p><div class="wallpaper-info"><span>3840 × 2160 · 4K</span><span class="premium-label">PREMIUM</span></div><button class="premium-btn">UNLOCK · 99 ₽</button>
+</div>
+      <div class="art-card" data-category="free" data-title="stellar cloud">
+  <button class="favorite-btn" data-id="cloud">♡</button><div class="art-placeholder cloud-bg"></div>
+  <h3>STELLAR CLOUD</h3><p>Облака звёздной пыли</p><div class="wallpaper-info"><span>1920 × 1080 · FULL HD</span><span class="free-label">FREE</span></div><button class="download-btn">DOWNLOAD</button>
+</div>
+      <div class="art-card" data-category="premium" data-title="deep space">
+  <button class="favorite-btn" data-id="deep">♡</button><div class="art-placeholder deep-bg"></div>
+  <h3>DEEP SPACE</h3><p>Глубины космоса и далёкие звёзды</p><div class="wallpaper-info"><span>3840 × 2160 · 4K</span><span class="premium-label">PREMIUM</span></div><button class="premium-btn">UNLOCK · 99 ₽</button>
+</div>
+      <div class="art-card" data-category="free" data-title="red planet">
+  <button class="favorite-btn" data-id="red">♡</button><div class="art-placeholder red-bg"></div>
+  <h3>RED PLANET</h3><p>Красный планетарный пейзаж</p><div class="wallpaper-info"><span>1920 × 1080 · FULL HD</span><span class="free-label">FREE</span></div><button class="download-btn">DOWNLOAD</button>
+</div>
+      <div class="art-card" data-category="premium" data-title="cosmic rings">
+  <button class="favorite-btn" data-id="rings">♡</button><div class="art-placeholder rings-bg"></div>
+  <h3>COSMIC RINGS</h3><p>Кольца газового гиганта</p><div class="wallpaper-info"><span>3840 × 2160 · 4K</span><span class="premium-label">PREMIUM</span></div><button class="premium-btn">UNLOCK · 99 ₽</button>
 </div>
 
     </div>
@@ -892,6 +917,14 @@ margin-top: 0;
   font-size: 11px;
 }
 
+
+
+.moon-bg{background:radial-gradient(circle at 70% 25%,#d6d9ee 0 8%,transparent 9%),radial-gradient(circle at 35% 65%,#6b7190 0 18%,#17172f 50%,#080817)!important}
+.orbit-bg{background:radial-gradient(ellipse at 50% 50%,transparent 25%,#b59cff 26% 29%,transparent 30%),radial-gradient(circle at 48% 45%,#7c54bc,#201444 55%,#080817)!important}
+.cloud-bg{background:radial-gradient(ellipse at 25% 40%,#e2a4ff,transparent 35%),radial-gradient(ellipse at 70% 65%,#537bcb,transparent 40%),#080817!important}
+.deep-bg{background:radial-gradient(circle at 25% 30%,#fff 0 1px,transparent 2px),radial-gradient(circle at 75% 65%,#fff 0 1px,transparent 2px),radial-gradient(ellipse at 50% 50%,#304e92,#101027 65%,#03040b)!important}
+.red-bg{background:radial-gradient(circle at 60% 40%,#ffb58c,#9c3e53 30%,#17172f 65%,#080817)!important}
+.rings-bg{background:radial-gradient(ellipse at 50% 50%,#d9b8ff 0 10%,#482f82 11% 18%,transparent 19%),radial-gradient(ellipse at 50% 50%,transparent 25%,#b6a3ff 26% 33%,transparent 34%),#080817!important}
 
 /* CATALOG SEARCH + FILTERS */
 .catalog-controls{
