@@ -4,7 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DIGITAL UNIVERSE</title>
+<title>DIGITAL UNIVERSE — Space Wallpapers</title>
+<meta name="description" content="Explore a universe of space wallpapers. Get all premium wallpapers with one one-time payment.">
+<meta name="theme-color" content="#080716">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%239b7cff'/%3E%3Cstop offset='1' stop-color='%2349d8df'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%23080716'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='url(%23g)' stroke-width='3'/%3E%3Cellipse cx='32' cy='32' rx='27' ry='10' fill='none' stroke='%23d8c7ff' stroke-width='2' transform='rotate(-28 32 32)'/%3E%3Ccircle cx='49' cy='20' r='4' fill='%2349d8df'/%3E%3C/svg%3E">
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;600&display=swap');
@@ -161,6 +164,48 @@ header{top:22px}
 /* ACCOUNT NAVIGATION FIX */
 html{scroll-behavior:smooth}
 #account{scroll-margin-top:105px}
+
+
+/* STAGE 12 — FINISHING, NAVIGATION, ONE-TIME PREMIUM ACCESS */
+#space-gallery{scroll-margin-top:90px}
+.favorites-section{
+  position:relative;z-index:5;background:radial-gradient(ellipse at 50% 0%,rgba(83,55,160,.14),transparent 58%),#03040b;
+  color:#fff;padding:82px clamp(16px,4vw,56px) 100px;text-align:center;min-height:300px;border-top:1px solid rgba(167,139,250,.12);
+  scroll-margin-top:85px
+}
+.favorites-section h2{font-family:Orbitron,sans-serif;color:#c4a2ff;letter-spacing:5px;margin-bottom:16px;font-size:clamp(20px,3vw,30px)}
+.favorites-intro{color:#9296b8;font-size:14px;line-height:1.7}
+#favorites-list .art-card{position:relative;min-width:0;overflow:hidden;background:linear-gradient(145deg,rgba(23,20,48,.96),rgba(8,8,22,.98));border:1px solid rgba(167,139,250,.22);border-radius:20px;padding:16px;text-align:left;box-shadow:0 12px 38px rgba(0,0,0,.22)}
+#favorites-list .art-placeholder{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:14px;cursor:zoom-in}
+#favorites-list .art-card h3{margin:18px 4px 6px;font-size:18px;letter-spacing:2px}
+#favorites-list .art-card p{margin:0 4px 12px;color:#aaa8c5;font-size:13px}
+#favorites-list .wallpaper-info{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:10px 2px}
+#favorites-list .favorite-btn{position:absolute;top:23px;right:23px;z-index:3}
+#favorites-list .download-btn,#favorites-list .premium-btn{width:100%;margin-top:12px}
+.all-access-banner{
+  max-width:1100px;margin:30px auto 32px;padding:clamp(20px,3vw,30px);
+  display:flex;align-items:center;justify-content:space-between;gap:24px;text-align:left;
+  border:1px solid rgba(167,139,250,.42);border-radius:18px;
+  background:linear-gradient(110deg,rgba(66,47,120,.34),rgba(12,15,39,.92) 58%,rgba(20,54,72,.34));
+  box-shadow:0 15px 45px rgba(42,28,91,.18)
+}
+.all-access-copy{display:grid;gap:8px}
+.all-access-kicker{font-size:9px;letter-spacing:3px;color:#bca8ff}
+.all-access-copy strong{font-family:Orbitron,sans-serif;font-size:clamp(16px,2.3vw,23px);letter-spacing:1.5px;color:#f3efff}
+.all-access-copy>span:last-child{font-size:13px;color:#b8b5d0}
+.all-access-cta{flex:0 0 auto;padding:15px 22px;border-radius:10px;border:1px solid #c4a2ff;background:linear-gradient(100deg,#6847bd,#8b5cf6);color:#fff;font-family:Orbitron,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;cursor:pointer;transition:.2s}
+.all-access-cta:hover{transform:translateY(-2px);box-shadow:0 0 25px rgba(139,92,246,.35)}
+#space-gallery .premium-btn{background:linear-gradient(100deg,rgba(104,71,189,.95),rgba(139,92,246,.95));border:1px solid rgba(196,162,255,.75);color:white}
+#space-gallery .premium-btn:hover{filter:brightness(1.14)}
+#space-gallery .premium-label{font-size:9px}
+#space-gallery .catalog-controls{scroll-margin-top:90px}
+@media(max-width:650px){
+  .all-access-banner{align-items:stretch;flex-direction:column;text-align:center}
+  .all-access-cta{width:100%}
+  .favorites-section{padding-top:60px;padding-bottom:70px}
+  #favorites-list{grid-template-columns:1fr!important}
+}
+
 </style>
 </head>
 
@@ -174,9 +219,9 @@ html{scroll-behavior:smooth}
   <nav class="main-nav">
   <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">HOME</a>
 
-  <a href="#space-gallery" onclick="document.getElementById('space-gallery').scrollIntoView({behavior:'smooth'}); return false;">WALLPAPERS</a>
+  <a href="#space-gallery" id="wallpapers-nav-link">WALLPAPERS</a>
 
-  <a href="#favorites" onclick="document.getElementById('favorites').scrollIntoView({behavior:'smooth'}); return false;">FAVORITES</a>
+  <a href="#favorites" id="favorites-nav-link">FAVORITES</a>
 
   <a href="#account" id="account-nav-link">ACCOUNT</a>
 </nav>
@@ -509,8 +554,14 @@ document.getElementById('close').onclick=()=>{
 document.getElementById('explore').onclick=()=>{
   document.getElementById('panel').style.display='none';
   zoomed=false;
+  selected=-1;
   targetX=0;
   targetY=0;
+  const catalog = document.getElementById('space-gallery');
+  if (catalog) {
+    history.replaceState(null, '', '#space-gallery');
+    catalog.scrollIntoView({behavior:'smooth', block:'start'});
+  }
 };
 
 // DRAG TO ROTATE
@@ -676,6 +727,14 @@ window.addEventListener('resize',()=>{
       A curated collection of original space wallpapers.
     </p>
 
+    <div class="all-access-banner">
+      <div class="all-access-copy">
+        <span class="all-access-kicker">ONE PASS · THE WHOLE PREMIUM COLLECTION</span>
+        <strong>UNLOCK ALL PREMIUM WALLPAPERS</strong>
+        <span>One-time payment · 99 ₽ · No subscription · No repeated charges</span>
+      </div>
+      <button type="button" class="all-access-cta" id="all-access-cta">GET ALL-ACCESS</button>
+    </div>
 
     <div class="catalog-controls">
       <div class="catalog-search-wrap">
@@ -765,9 +824,9 @@ window.addEventListener('resize',()=>{
         <p>A purple planet surrounded by glowing orbits</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="event horizon">
@@ -777,9 +836,9 @@ window.addEventListener('resize',()=>{
         <p>A black hole with a radiant accretion disk</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="emerald nebula">
@@ -789,9 +848,9 @@ window.addEventListener('resize',()=>{
         <p>An emerald-colored nebula</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="solar crown">
@@ -801,9 +860,9 @@ window.addEventListener('resize',()=>{
         <p>The golden glow of a distant star</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="frozen world">
@@ -813,9 +872,9 @@ window.addEventListener('resize',()=>{
         <p>An icy planet beneath a cold cosmic glow</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="cosmic fire">
@@ -825,9 +884,9 @@ window.addEventListener('resize',()=>{
         <p>Fiery clouds and bursts of energy</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="void">
@@ -837,9 +896,9 @@ window.addEventListener('resize',()=>{
         <p>Minimalist dark space</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="galactic spiral">
@@ -849,9 +908,9 @@ window.addEventListener('resize',()=>{
         <p>A spiral galaxy with a brilliant core</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="twin moons">
@@ -861,9 +920,9 @@ window.addEventListener('resize',()=>{
         <p>Two moons above a distant world</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="celestial gate">
@@ -873,9 +932,9 @@ window.addEventListener('resize',()=>{
         <p>A glowing portal in the cosmic void</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="pink universe">
@@ -885,9 +944,9 @@ window.addEventListener('resize',()=>{
         <p>A pink nebula surrounded by stardust</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="asteroid king">
@@ -897,9 +956,9 @@ window.addEventListener('resize',()=>{
         <p>A planet surrounded by an asteroid belt</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="deep space">
@@ -909,9 +968,9 @@ window.addEventListener('resize',()=>{
         <p>Deep blue space filled with distant stars</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="last sunrise">
@@ -921,9 +980,9 @@ window.addEventListener('resize',()=>{
         <p>A planet silhouetted against a massive sun</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
       <article class="art-card" data-category="premium" data-title="cosmic rings">
@@ -933,9 +992,9 @@ window.addEventListener('resize',()=>{
         <p>A fantastical planet with radiant rings</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
-          <span class="premium-label">PREMIUM</span>
+          <span class="premium-label">ALL-ACCESS COLLECTION</span>
         </div>
-        <button class="premium-btn">UNLOCK · 99 ₽</button>
+        <button class="premium-btn">GET ALL-ACCESS</button>
       </article>
 
     
@@ -946,13 +1005,7 @@ window.addEventListener('resize',()=>{
     </div>
   </div>
 </section>
-<section id="favorites" style="
-  background:#03040b;
-  color:white;
-  padding:70px 20px;
-  text-align:center;
-  min-height:250px;
-">
+<section id="favorites" class="favorites-section">
   <h2 style="
     color:#c4a2ff;
     font-family:Orbitron,sans-serif;
@@ -960,9 +1013,7 @@ window.addEventListener('resize',()=>{
     margin-bottom:20px;
   ">MY FAVORITES ♡</h2>
 
-  <p style="color:#9296b8;">
-    Your favorite space wallpapers will appear here.
-  </p>
+  <p class="favorites-intro">Your saved space wallpapers will appear here.</p>
 
   <div id="favorites-list"></div>
 </section>
@@ -1366,7 +1417,13 @@ margin-top: 0;
     saved.forEach(id => {
       const sourceButton = [...gallery.querySelectorAll('.favorite-btn')].find(button => button.dataset.id === id);
       const sourceCard = sourceButton?.closest('.art-card');
-      if (sourceCard) favoritesList.appendChild(sourceCard.cloneNode(true));
+      if (sourceCard) {
+        const favoriteCard = sourceCard.cloneNode(true);
+        favoriteCard.hidden = false;
+        favoriteCard.removeAttribute('hidden');
+        favoriteCard.classList.add('favorite-copy-card');
+        favoritesList.appendChild(favoriteCard);
+      }
     });
     if (!favoritesList.children.length) {
       const empty = document.createElement('p');
@@ -1385,6 +1442,13 @@ margin-top: 0;
   });
   window.addEventListener('storage', event => {
     if (!event.key || event.key === FAVORITES_KEY) { renderFavorites(); syncFavoriteButtons(); }
+  });
+  const favoritesLink = document.getElementById('favorites-nav-link');
+  if (favoritesLink) favoritesLink.addEventListener('click', event => {
+    event.preventDefault();
+    renderFavorites();
+    history.replaceState(null, '', '#favorites');
+    document.getElementById('favorites').scrollIntoView({behavior:'smooth', block:'start'});
   });
   renderFavorites();
   syncFavoriteButtons();
@@ -1469,12 +1533,12 @@ margin-top: 0;
       <h2 id="du-modal-title">WALLPAPER</h2>
       <p id="du-modal-description"></p>
       <button id="du-download-image" class="du-modal-action du-download-image" type="button" hidden>DOWNLOAD WALLPAPER</button>
-      <button id="du-checkout-open" class="du-modal-action du-checkout-open" type="button" hidden>CONTINUE TO CHECKOUT · 99 ₽</button>
+      <button id="du-checkout-open" class="du-modal-action du-checkout-open" type="button" hidden>GET ALL-ACCESS · 99 ₽ ONCE</button>
       <form id="du-checkout-form" class="du-checkout-form" hidden>
-        <label for="du-checkout-email">EMAIL FOR YOUR ORDER</label>
+        <label for="du-checkout-email">EMAIL FOR YOUR ALL-ACCESS PASS</label>
         <input id="du-checkout-email" type="email" placeholder="you@example.com" maxlength="120" required>
-        <p class="du-checkout-disclaimer">Checkout preview only. Payment processing is not connected, and you will not be charged.</p>
-        <button class="du-modal-action" type="submit">SAVE CHECKOUT REQUEST</button>
+        <p class="du-checkout-disclaimer">One-time all-access request for the entire Premium collection · 99 ₽. Demo mode only: payment is not connected and no charge will be made.</p>
+        <button class="du-modal-action" type="submit">REQUEST ALL-ACCESS</button>
       </form>
       <p id="du-checkout-result" class="du-checkout-result" role="status" aria-live="polite" hidden></p>
       <button id="du-modal-action" class="du-modal-action">CLOSE</button>
@@ -1484,10 +1548,10 @@ margin-top: 0;
 <style>
 .du-modal{position:fixed;inset:0;z-index:99999;background:rgba(3,4,12,.88);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px}
 .du-modal.open{display:flex}
-.du-modal-panel{position:relative;width:min(850px,100%);background:#0d0d20;border:1px solid #7251b9;border-radius:18px;overflow:hidden;box-shadow:0 0 45px rgba(139,92,246,.25);max-height:90vh;overflow-y:auto}
+.du-modal-panel{position:relative;width:min(1240px,96vw);background:#0d0d20;border:1px solid #7251b9;border-radius:18px;overflow:hidden;box-shadow:0 0 45px rgba(139,92,246,.25);max-height:94vh;overflow-y:auto}
 .du-modal-close{position:absolute;right:14px;top:14px;z-index:2;width:42px;height:42px;border-radius:50%;background:rgba(5,5,20,.75);border:1px solid #a78bfa;color:white;font-size:28px;cursor:pointer}
-.du-modal-image{display:block;width:100%;height:min(48vh,420px);object-fit:contain;object-position:center;background:#05050d}
-.du-modal-content{text-align:center;padding:25px 28px 30px}
+.du-modal-image{display:block;width:100%;height:min(68vh,720px);object-fit:contain;object-position:center;background:#05050d}
+.du-modal-content{text-align:center;padding:22px 28px 28px}
 .du-modal-tag{color:#a78bfa;letter-spacing:4px;font-size:11px}
 .du-modal-content h2{color:white;letter-spacing:4px;margin:12px 0}
 .du-modal-content p{color:#b8b8d0;line-height:1.7}
@@ -1520,7 +1584,7 @@ margin-top: 0;
 .du-checkout-form .du-modal-action{width:100%}
 .du-checkout-disclaimer{font-size:11px!important;color:#aaa5c5!important;margin:12px 0!important}
 .du-checkout-result{max-width:430px;margin:18px auto 0;padding:15px;border:1px solid rgba(74,222,128,.35);background:rgba(22,101,52,.13);border-radius:10px;color:#bbf7d0!important;font-size:12px}
-@media(max-width:600px){.du-modal-content{padding:20px}.du-modal-image{height:35vh}.du-modal.viewer-mode .du-modal-image{height:100dvh}}
+@media(max-width:600px){.du-modal-panel{width:100%;max-height:96vh;border-radius:14px}.du-modal-content{padding:18px 16px 22px}.du-modal-image{height:52vh}.du-modal.viewer-mode .du-modal-image{height:100dvh}}
 </style>
 <script>
 (() => {
@@ -1568,8 +1632,8 @@ margin-top: 0;
     resetActions();
     modal.classList.toggle('viewer-mode', mode === 'download');
     if (mode === 'premium'){
-      tag.textContent = 'PREMIUM WALLPAPER · 4K';
-      description.textContent = 'Full version · One-time price: 99 ₽. No subscription.';
+      tag.textContent = 'PREMIUM COLLECTION · ALL-ACCESS';
+      description.textContent = 'One payment unlocks the entire Premium wallpaper collection — not just this image. 99 ₽ once. No subscription.';
       checkoutOpen.hidden = false;
       action.textContent = 'CLOSE';
     } else if (mode === 'download'){
@@ -1595,6 +1659,11 @@ margin-top: 0;
     if (freeButton){ event.preventDefault(); show(freeButton.closest('.art-card'), 'download'); }
     else if (premiumButton){ event.preventDefault(); show(premiumButton.closest('.art-card'), 'premium'); }
     else if (imageTarget){ show(imageTarget.closest('.art-card'), 'preview'); }
+  });
+  const allAccessCta = document.getElementById('all-access-cta');
+  if (allAccessCta) allAccessCta.addEventListener('click', () => {
+    const firstPremium = document.querySelector('#space-gallery .art-card[data-category="premium"]');
+    if (firstPremium) show(firstPremium, 'premium');
   });
 
   downloadButton.addEventListener('click', async () => {
@@ -1641,7 +1710,9 @@ margin-top: 0;
     if (!email || !checkoutForm.reportValidity()) return;
     const request = {
       id: 'DU-' + Date.now(),
-      wallpaper: currentCard?.dataset.title || title.textContent,
+      product: 'DIGITAL UNIVERSE PREMIUM ALL-ACCESS',
+      requestedFrom: currentCard?.dataset.title || title.textContent,
+      accessScope: 'all-premium-wallpapers',
       email,
       price: 99,
       currency: 'RUB',
@@ -1654,7 +1725,7 @@ margin-top: 0;
     requests.push(request);
     localStorage.setItem('du-checkout-requests', JSON.stringify(requests));
     checkoutForm.hidden = true;
-    checkoutResult.textContent = 'Your checkout request has been saved in this browser. No payment was made. Payment processing will be available after the secure payment provider is connected.';
+    checkoutResult.textContent = 'Your all-access request has been saved in this browser. It covers the entire Premium collection for one payment of 99 ₽. No payment was made and Premium access is not activated until a real payment provider is connected.';
     checkoutResult.hidden = false;
     window.dispatchEvent(new Event('du-orders-updated'));
   });
@@ -1697,10 +1768,10 @@ margin-top: 0;
       else orders.slice().reverse().slice(0,5).forEach(order => {
         const row=document.createElement('div');row.className='account-order-row';
         const details=document.createElement('div');
-        const name=document.createElement('strong');name.textContent=String(order.wallpaper||'Wallpaper').replace(/-/g,' ').toUpperCase();
+        const name=document.createElement('strong');name.textContent=String(order.product || order.wallpaper || 'Wallpaper').replace(/-/g,' ').toUpperCase();
         const date=document.createElement('small');date.textContent=order.createdAt?new Date(order.createdAt).toLocaleDateString():'Date unavailable';
         details.append(name,date);
-        const status=document.createElement('span');status.className='account-order-status';status.textContent='REQUEST SAVED';
+        const status=document.createElement('span');status.className='account-order-status';status.textContent='ALL-ACCESS REQUEST';
         row.append(details,status);orderList.appendChild(row);
       });
     }
@@ -1732,6 +1803,13 @@ margin-top: 0;
 (() => {
   const link = document.getElementById('account-nav-link');
   const target = document.getElementById('account');
+  const wallpapersLink = document.getElementById('wallpapers-nav-link');
+  if (wallpapersLink) wallpapersLink.addEventListener('click', event => {
+    event.preventDefault();
+    const catalog = document.getElementById('space-gallery');
+    history.replaceState(null, '', '#space-gallery');
+    catalog?.scrollIntoView({behavior:'smooth', block:'start'});
+  });
   if (!link || !target) return;
   link.addEventListener('click', event => {
     event.preventDefault();
