@@ -633,9 +633,22 @@ window.addEventListener('resize',()=>{
       Коллекция авторских космических обоев.
     </p>
 
-    <div class="gallery-grid">
 
-      <div class="art-card">
+    <div class="catalog-controls">
+      <div class="catalog-search-wrap">
+        <span class="catalog-search-icon">⌕</span>
+        <input type="search" id="wallpaper-search" class="catalog-search" placeholder="SEARCH WALLPAPERS..." aria-label="Поиск обоев">
+      </div>
+      <div class="catalog-filters" role="group" aria-label="Фильтр обоев">
+        <button class="catalog-filter active" data-filter="all">ALL</button>
+        <button class="catalog-filter" data-filter="free">FREE</button>
+        <button class="catalog-filter" data-filter="premium">PREMIUM</button>
+      </div>
+      <div class="catalog-count" id="catalog-count">3 WALLPAPERS</div>
+    </div>
+\n    <div class="gallery-grid">
+
+      <div class="art-card" data-category="free" data-title="nebula dream">
   <button class="favorite-btn" data-id="nebula">♡</button>
   <div class="art-placeholder nebula-bg"></div>
   <h3>NEBULA DREAM</h3>
@@ -647,7 +660,7 @@ window.addEventListener('resize',()=>{
   <button class="download-btn">DOWNLOAD</button>
 </div>
 
-      <div class="art-card">
+      <div class="art-card" data-category="premium" data-title="unknown planet">
   <button class="favorite-btn" data-id="planet">♡</button>
   <div class="art-placeholder planet-bg"></div>
   <h3>UNKNOWN PLANET</h3>
@@ -659,7 +672,7 @@ window.addEventListener('resize',()=>{
   <button class="premium-btn">UNLOCK · 99 ₽</button>
 </div>
 
-      <div class="art-card">
+      <div class="art-card" data-category="premium" data-title="galactic light">
   <button class="favorite-btn" data-id="galaxy">♡</button>
   <div class="art-placeholder galaxy-bg"></div>
   <h3>GALACTIC LIGHT</h3>
@@ -879,7 +892,88 @@ margin-top: 0;
   font-size: 11px;
 }
 
-.gallery-footer {
+
+/* CATALOG SEARCH + FILTERS */
+.catalog-controls{
+  max-width:1100px;
+  margin:0 auto 35px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.catalog-search-wrap{
+  flex:1 1 280px;
+  position:relative;
+}
+.catalog-search-icon{
+  position:absolute;
+  left:16px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#a78bfa;
+  font-size:22px;
+  pointer-events:none;
+}
+.catalog-search{
+  width:100%;
+  padding:15px 18px 15px 45px;
+  background:#0d0d20;
+  border:1px solid #34305d;
+  border-radius:10px;
+  color:white;
+  outline:none;
+  font:inherit;
+  letter-spacing:1px;
+  transition:.25s;
+}
+.catalog-search:focus{
+  border-color:#a78bfa;
+  box-shadow:0 0 18px rgba(139,92,246,.2);
+}
+.catalog-search::placeholder{color:#737391}
+.catalog-filters{display:flex;gap:10px;flex-wrap:wrap}
+.catalog-filter{
+  padding:13px 18px;
+  background:#111128;
+  border:1px solid #34305d;
+  color:#9296b8;
+  border-radius:8px;
+  font-size:11px;
+  letter-spacing:2px;
+  cursor:pointer;
+  transition:.25s;
+}
+.catalog-filter:hover,.catalog-filter.active{
+  background:#211640;
+  border-color:#8b5cf6;
+  color:#fff;
+  box-shadow:0 0 15px rgba(139,92,246,.15);
+}
+.catalog-count{
+  flex:0 0 100%;
+  text-align:left;
+  color:#777791;
+  font-size:10px;
+  letter-spacing:2px;
+  margin-top:-5px;
+}
+.art-card[hidden]{display:none!important}
+.catalog-empty{
+  grid-column:1/-1;
+  padding:35px 20px;
+  border:1px dashed #34305d;
+  border-radius:12px;
+  color:#9296b8;
+}
+@media(max-width:700px){
+  .catalog-controls{align-items:stretch}
+  .catalog-filters{justify-content:center}
+  .catalog-filter{flex:1;min-width:90px}
+  .catalog-count{text-align:center}
+}
+\n.gallery-footer {
   margin-top: 65px;
   color: #777791;
   font-size: 11px;
@@ -947,6 +1041,139 @@ favoriteButtons.forEach(button => {
 });
 
 renderFavorites();
+</script>
+
+<script>
+(() => {
+  const searchInput = document.getElementById('wallpaper-search');
+  const filterButtons = document.querySelectorAll('.catalog-filter');
+  const cards = document.querySelectorAll('#space-gallery .art-card');
+  const count = document.getElementById('catalog-count');
+  const grid = document.querySelector('#space-gallery .gallery-grid');
+  if (!searchInput || !grid || !cards.length) return;
+
+  let activeFilter = 'all';
+  let emptyMessage = null;
+
+  function updateCatalog(){
+    const query = searchInput.value.trim().toLowerCase();
+    let visible = 0;
+
+    cards.forEach(card => {
+      const category = card.dataset.category || '';
+      const title = card.dataset.title || card.querySelector('h3')?.textContent.toLowerCase() || '';
+      const matchesFilter = activeFilter === 'all' || category === activeFilter;
+      const matchesSearch = title.includes(query);
+      const show = matchesFilter && matchesSearch;
+      card.hidden = !show;
+      if(show) visible++;
+    });
+
+    count.textContent = visible + (visible === 1 ? ' WALLPAPER' : ' WALLPAPERS');
+
+    if(!visible){
+      if(!emptyMessage){
+        emptyMessage = document.createElement('div');
+        emptyMessage.className = 'catalog-empty';
+        emptyMessage.textContent = 'NOTHING FOUND — TRY ANOTHER SEARCH.';
+      }
+      grid.appendChild(emptyMessage);
+    } else if(emptyMessage){
+      emptyMessage.remove();
+      emptyMessage = null;
+    }
+  }
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      activeFilter = button.dataset.filter;
+      filterButtons.forEach(item => item.classList.toggle('active', item === button));
+      updateCatalog();
+    });
+  });
+
+  searchInput.addEventListener('input', updateCatalog);
+  updateCatalog();
+})();
+</script>
+\n
+<!-- WALLPAPER PREVIEW / PREMIUM MODAL -->
+<div id="du-modal" class="du-modal" aria-hidden="true">
+  <div class="du-modal-panel" role="dialog" aria-modal="true" aria-labelledby="du-modal-title">
+    <button class="du-modal-close" aria-label="Close">×</button>
+    <div id="du-modal-image" class="du-modal-image"></div>
+    <div class="du-modal-content">
+      <div id="du-modal-tag" class="du-modal-tag">WALLPAPER PREVIEW</div>
+      <h2 id="du-modal-title">WALLPAPER</h2>
+      <p id="du-modal-description"></p>
+      <button id="du-modal-action" class="du-modal-action">CLOSE</button>
+    </div>
+  </div>
+</div>
+<style>
+.du-modal{position:fixed;inset:0;z-index:99999;background:rgba(3,4,12,.88);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px}
+.du-modal.open{display:flex}
+.du-modal-panel{position:relative;width:min(850px,100%);background:#0d0d20;border:1px solid #7251b9;border-radius:18px;overflow:hidden;box-shadow:0 0 45px rgba(139,92,246,.25);max-height:90vh;overflow-y:auto}
+.du-modal-close{position:absolute;right:14px;top:14px;z-index:2;width:42px;height:42px;border-radius:50%;background:rgba(5,5,20,.75);border:1px solid #a78bfa;color:white;font-size:28px;cursor:pointer}
+.du-modal-image{width:100%;height:min(48vh,420px);background-position:center;background-size:cover;background-color:#17172f}
+.du-modal-content{text-align:center;padding:25px 28px 30px}
+.du-modal-tag{color:#a78bfa;letter-spacing:4px;font-size:11px}
+.du-modal-content h2{color:white;letter-spacing:4px;margin:12px 0}
+.du-modal-content p{color:#b8b8d0;line-height:1.7}
+.du-modal-action{margin-top:15px;padding:14px 28px;background:#17102d;border:1px solid #8b5cf6;border-radius:8px;color:white;letter-spacing:2px;cursor:pointer}
+.du-modal-action:hover{background:#8b5cf6}
+.art-placeholder{cursor:zoom-in}
+@media(max-width:600px){.du-modal-content{padding:20px}.du-modal-image{height:35vh}}
+</style>
+<script>
+(() => {
+  const modal = document.getElementById('du-modal');
+  const image = document.getElementById('du-modal-image');
+  const title = document.getElementById('du-modal-title');
+  const description = document.getElementById('du-modal-description');
+  const tag = document.getElementById('du-modal-tag');
+  const action = document.getElementById('du-modal-action');
+  const closeButton = modal.querySelector('.du-modal-close');
+  let currentCard = null;
+  function close(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}
+  function show(card, mode){
+    currentCard=card;
+    const art=card.querySelector('.art-placeholder');
+    const bg=getComputedStyle(art).backgroundImage;
+    image.style.backgroundImage=bg;
+    title.textContent=card.querySelector('h3')?.textContent || 'WALLPAPER';
+    description.textContent=card.querySelector('p')?.textContent || '';
+    if(mode==='premium'){
+      tag.textContent='PREMIUM WALLPAPER · 4K';
+      description.textContent='Полная версия в разрешении 4K. Цена — 99 ₽, единоразовая покупка. Оплата пока не подключена.';
+      action.textContent='ПОНЯТНО';
+    } else {
+      tag.textContent='WALLPAPER PREVIEW';
+      action.textContent='CLOSE PREVIEW';
+    }
+    modal.classList.add('open');modal.setAttribute('aria-hidden','false');
+  }
+  document.querySelectorAll('#space-gallery .art-card').forEach(card=>{
+    const art=card.querySelector('.art-placeholder');
+    art.addEventListener('click',()=>show(card,'preview'));
+    const freeButton=card.querySelector('.download-btn');
+    if(freeButton){
+      freeButton.addEventListener('click',()=>{
+        const bg=getComputedStyle(art).backgroundImage;
+        const match=bg.match(/url\(["']?(.*?)["']?\)/);
+        if(!match){show(card,'preview');return;}
+        const url=match[1];
+        const link=document.createElement('a');link.href=url;link.download=card.dataset.title.replace(/\s+/g,'-')+'.png';
+        document.body.appendChild(link);link.click();link.remove();
+      });
+    }
+    const premiumButton=card.querySelector('.premium-btn');
+    if(premiumButton)premiumButton.addEventListener('click',()=>show(card,'premium'));
+  });
+  closeButton.addEventListener('click',close);action.addEventListener('click',close);
+  modal.addEventListener('click',e=>{if(e.target===modal)close();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close();});
+})();
 </script>
 </body>
 </html>
