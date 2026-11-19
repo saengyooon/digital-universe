@@ -1000,7 +1000,7 @@ window.addEventListener('resize',()=>{
       <button type="button" id="account-favorites" class="account-primary">VIEW MY FAVORITES</button>
       <button type="button" id="account-logout" class="account-secondary">LOG OUT</button>
     </div>
-    <p class="account-disclaimer">Note: this is currently a local demo profile. Your data is stored only in this browser on this device. Secure sign-in, cross-device sync, and protected account storage will require a server.</p>
+    <p class="account-disclaimer">Note: this is a local demo profile. Profile details and checkout requests are stored only in this browser on this device. Secure sign-in, order storage, cross-device sync, and protected downloads require a backend.</p>
   </div>
 </section>
 <style>
@@ -1449,6 +1449,14 @@ renderFavorites();
       <div id="du-modal-tag" class="du-modal-tag">WALLPAPER PREVIEW</div>
       <h2 id="du-modal-title">WALLPAPER</h2>
       <p id="du-modal-description"></p>
+      <button id="du-checkout-open" class="du-modal-action du-checkout-open" type="button" hidden>CONTINUE TO CHECKOUT · 99 ₽</button>
+      <form id="du-checkout-form" class="du-checkout-form" hidden>
+        <label for="du-checkout-email">EMAIL FOR YOUR ORDER</label>
+        <input id="du-checkout-email" type="email" placeholder="you@example.com" maxlength="120" required>
+        <p class="du-checkout-disclaimer">Checkout preview only. Payment processing is not connected, and you will not be charged.</p>
+        <button class="du-modal-action" type="submit">SAVE CHECKOUT REQUEST</button>
+      </form>
+      <p id="du-checkout-result" class="du-checkout-result" role="status" aria-live="polite" hidden></p>
       <button id="du-modal-action" class="du-modal-action">CLOSE</button>
     </div>
   </div>
@@ -1466,6 +1474,15 @@ renderFavorites();
 .du-modal-action{margin-top:15px;padding:14px 28px;background:#17102d;border:1px solid #8b5cf6;border-radius:8px;color:white;letter-spacing:2px;cursor:pointer}
 .du-modal-action:hover{background:#8b5cf6}
 .art-placeholder{cursor:zoom-in}
+
+.du-checkout-open{display:block;margin:20px auto 0;background:linear-gradient(100deg,#6847bd,#8b5cf6);border-color:#b9a0ff}
+.du-checkout-form{max-width:430px;margin:22px auto 0;text-align:left;padding:20px;background:rgba(5,6,20,.72);border:1px solid rgba(167,139,250,.28);border-radius:12px}
+.du-checkout-form label{display:block;color:#c4b5fd;font-size:10px;letter-spacing:2px;margin-bottom:9px}
+.du-checkout-form input{width:100%;padding:13px 14px;background:#08091a;border:1px solid #51417d;border-radius:8px;color:white;font:inherit;outline:none}
+.du-checkout-form input:focus{border-color:#a78bfa}
+.du-checkout-form .du-modal-action{width:100%}
+.du-checkout-disclaimer{font-size:11px!important;color:#aaa5c5!important;margin:12px 0!important}
+.du-checkout-result{max-width:430px;margin:18px auto 0;padding:15px;border:1px solid rgba(74,222,128,.35);background:rgba(22,101,52,.13);border-radius:10px;color:#bbf7d0!important;font-size:12px}
 @media(max-width:600px){.du-modal-content{padding:20px}.du-modal-image{height:35vh}}
 </style>
 <script>
@@ -1477,8 +1494,16 @@ renderFavorites();
   const tag = document.getElementById('du-modal-tag');
   const action = document.getElementById('du-modal-action');
   const closeButton = modal.querySelector('.du-modal-close');
+  const checkoutOpen = document.getElementById('du-checkout-open');
+  const checkoutForm = document.getElementById('du-checkout-form');
+  const checkoutEmail = document.getElementById('du-checkout-email');
+  const checkoutResult = document.getElementById('du-checkout-result');
   let currentCard = null;
   function close(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}
+  function resetCheckout(){
+    checkoutForm.hidden=true;checkoutOpen.hidden=true;checkoutResult.hidden=true;
+    checkoutForm.reset();checkoutOpen.style.display='none';
+  }
   function show(card, mode){
     currentCard=card;
     const art=card.querySelector('.art-placeholder');
@@ -1486,10 +1511,12 @@ renderFavorites();
     image.style.backgroundImage='url("'+imageUrl+'")';
     title.textContent=card.querySelector('h3')?.textContent || 'WALLPAPER';
     description.textContent=card.querySelector('p')?.textContent || '';
+    resetCheckout();
     if(mode==='premium'){
       tag.textContent='PREMIUM WALLPAPER · 4K';
-      description.textContent='Full version in 4K resolution. One-time purchase: 99 ₽. Payments are not connected yet.';
-      action.textContent='GOT IT';
+      description.textContent='Full version · One-time price: 99 ₽. No subscription.';
+      checkoutOpen.hidden=false;checkoutOpen.style.display='block';
+      action.textContent='CLOSE';
     } else {
       tag.textContent='WALLPAPER PREVIEW';
       action.textContent='CLOSE PREVIEW';
@@ -1510,6 +1537,21 @@ renderFavorites();
     }
     const premiumButton=card.querySelector('.premium-btn');
     if(premiumButton)premiumButton.addEventListener('click',()=>show(card,'premium'));
+  });
+  checkoutOpen.addEventListener('click',()=>{
+    checkoutOpen.hidden=true;checkoutOpen.style.display='none';checkoutForm.hidden=false;
+    let profile=null;try{profile=JSON.parse(localStorage.getItem('du-local-profile')||'null')}catch(error){}
+    if(profile&&profile.email)checkoutEmail.value=profile.email;
+    checkoutEmail.focus();
+  });
+  checkoutForm.addEventListener('submit',event=>{
+    event.preventDefault();
+    const email=checkoutEmail.value.trim();
+    if(!email)return;
+    const request={id:'DU-'+Date.now(),wallpaper:currentCard?.dataset.title||title.textContent,email,price:99,currency:'RUB',status:'checkout_requested',createdAt:new Date().toISOString()};
+    let requests=[];try{requests=JSON.parse(localStorage.getItem('du-checkout-requests')||'[]')}catch(error){}
+    requests.push(request);localStorage.setItem('du-checkout-requests',JSON.stringify(requests));
+    checkoutForm.hidden=true;checkoutResult.textContent='Your checkout request has been saved in this browser. No payment was made. Payment processing will be available after the secure payment provider is connected.';checkoutResult.hidden=false;
   });
   closeButton.addEventListener('click',close);action.addEventListener('click',close);
   modal.addEventListener('click',e=>{if(e.target===modal)close();});
