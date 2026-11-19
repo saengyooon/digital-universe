@@ -174,7 +174,7 @@ header{top:22px}
 
   <a href="#favorites" onclick="document.getElementById('favorites').scrollIntoView({behavior:'smooth'}); return false;">FAVORITES</a>
 
-  <a href="#account" onclick="alert('Личный кабинет скоро появится!'); return false;">ACCOUNT</a>
+  <a href="#account" onclick="document.getElementById('account').scrollIntoView({behavior:'smooth'}); return false;">ACCOUNT</a>
 </nav>
 
   <div class="status"><span>●</span> SYSTEM ONLINE</div>
@@ -962,6 +962,72 @@ window.addEventListener('resize',()=>{
 
   <div id="favorites-list"></div>
 </section>
+
+<!-- DIGITAL UNIVERSE ACCOUNT: LOCAL DEMO PROFILE -->
+<section id="account" class="account-section">
+  <div class="account-shell">
+    <div class="account-kicker">YOUR PERSONAL SPACE</div>
+    <h2>UNIVERSE ACCOUNT</h2>
+    <p class="account-intro">Создай профиль, чтобы видеть свои данные и быстро возвращаться к избранным мирам.</p>
+
+    <div id="account-guest" class="account-panel">
+      <div class="account-orbit">✦</div>
+      <h3>WELCOME, EXPLORER</h3>
+      <p>Укажи имя и электронную почту — профиль сохранится в этом браузере.</p>
+      <form id="account-form" class="account-form">
+        <label for="account-name">ТВОЁ ИМЯ</label>
+        <input id="account-name" name="name" type="text" maxlength="40" placeholder="Например, Alex" required autocomplete="nickname">
+        <label for="account-email">EMAIL</label>
+        <input id="account-email" name="email" type="email" maxlength="120" placeholder="you@example.com" required autocomplete="email">
+        <button type="submit" class="account-primary">CREATE LOCAL PROFILE</button>
+      </form>
+      <div class="account-note">ДЕМО-РЕЖИМ · БЕЗ ПАРОЛЯ И ОНЛАЙН-РЕГИСТРАЦИИ</div>
+    </div>
+
+    <div id="account-user" class="account-panel" hidden>
+      <div class="account-orbit">✦</div>
+      <div class="account-kicker">PROFILE ACTIVE</div>
+      <h3 id="account-greeting">WELCOME BACK</h3>
+      <p id="account-user-email" class="account-email"></p>
+      <div class="account-stats">
+        <div><strong id="account-favorite-count">0</strong><span>FAVORITES</span></div>
+        <div><strong>FREE</strong><span>MEMBERSHIP</span></div>
+      </div>
+      <button type="button" id="account-favorites" class="account-primary">VIEW MY FAVORITES</button>
+      <button type="button" id="account-logout" class="account-secondary">LOG OUT</button>
+    </div>
+    <p class="account-disclaimer">Важно: сейчас это локальный демонстрационный профиль. Данные хранятся только в браузере на этом устройстве; полноценный вход с паролем, синхронизация между устройствами и безопасное хранение появятся после подключения сервера.</p>
+  </div>
+</section>
+<style>
+.account-section{position:relative;z-index:1000;background:radial-gradient(ellipse at 50% 0%,rgba(83,55,160,.18),transparent 55%),#03040b;color:#fff;padding:90px 20px 110px;text-align:center;border-top:1px solid rgba(167,139,250,.14)}
+.account-shell{width:min(680px,100%);margin:0 auto}
+.account-kicker{color:#a78bfa;font-size:10px;letter-spacing:5px;margin-bottom:14px}
+.account-shell>h2{font-family:Orbitron,sans-serif;font-size:clamp(25px,5vw,38px);letter-spacing:3px;color:#eee9ff}
+.account-intro{color:#a5a5c1;line-height:1.8;margin:18px auto 30px;max-width:520px;font-size:14px}
+.account-panel{position:relative;max-width:470px;margin:0 auto;padding:34px clamp(20px,5vw,42px);background:linear-gradient(145deg,rgba(19,17,43,.97),rgba(7,8,22,.98));border:1px solid rgba(167,139,250,.35);border-radius:22px;box-shadow:0 20px 65px rgba(62,42,130,.18)}
+.account-orbit{width:58px;height:58px;margin:0 auto 18px;border:1px solid #9274ed;border-radius:50%;display:grid;place-items:center;color:#d9c8ff;font-size:27px;box-shadow:0 0 28px rgba(139,92,246,.3)}
+.account-panel h3{font-family:Orbitron,sans-serif;font-size:17px;letter-spacing:2px;color:#e9e2ff;margin-bottom:12px}
+.account-panel>p{color:#aaa8c5;font-size:13px;line-height:1.7;margin-bottom:22px}
+.account-form{text-align:left;display:grid;gap:10px}
+.account-form label{font-size:10px;letter-spacing:2px;color:#b9a8f5;margin-top:8px}
+.account-form input{width:100%;padding:14px 15px;border:1px solid #38305f;border-radius:10px;background:#090a1c;color:white;font:inherit;outline:none}
+.account-form input:focus{border-color:#a78bfa;box-shadow:0 0 16px rgba(139,92,246,.16)}
+.account-primary,.account-secondary{width:100%;padding:14px 18px;border-radius:10px;cursor:pointer;letter-spacing:2px;font-size:10px;font-weight:700;transition:.2s}
+.account-primary{margin-top:14px;background:#6847bd;border:1px solid #a78bfa;color:white}
+.account-primary:hover{background:#805fe0;box-shadow:0 0 22px rgba(139,92,246,.28)}
+.account-secondary{margin-top:10px;background:transparent;border:1px solid #4a426c;color:#bdb3dc}
+.account-secondary:hover{border-color:#a78bfa;color:white}
+.account-note{margin-top:18px;color:#74718f;font-size:9px;letter-spacing:2px}
+.account-email{word-break:break-word}
+.account-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:25px 0}
+.account-stats>div{padding:17px 10px;background:rgba(7,8,24,.7);border:1px solid rgba(167,139,250,.2);border-radius:12px}
+.account-stats strong,.account-stats span{display:block}
+.account-stats strong{font-family:Orbitron,sans-serif;font-size:20px;color:#d6c6ff}
+.account-stats span{margin-top:7px;font-size:9px;letter-spacing:2px;color:#8583a4}
+.account-disclaimer{max-width:590px;margin:22px auto 0;color:#77758f;font-size:11px;line-height:1.8}
+@media(max-width:600px){.account-section{padding:65px 16px 80px}.account-panel{padding:28px 20px}}
+</style>
 <style>
 #space-gallery {
   position: relative;
@@ -1446,5 +1512,51 @@ renderFavorites();
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close();});
 })();
 </script>
+
+<script>
+(() => {
+  const PROFILE_KEY = 'du-local-profile';
+  const guest = document.getElementById('account-guest');
+  const user = document.getElementById('account-user');
+  const form = document.getElementById('account-form');
+  if (!guest || !user || !form) return;
+
+  function readProfile(){
+    try { return JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null'); }
+    catch(error){ return null; }
+  }
+  function renderProfile(){
+    const profile = readProfile();
+    guest.hidden = !!profile;
+    user.hidden = !profile;
+    if(profile){
+      document.getElementById('account-greeting').textContent = 'WELCOME, ' + profile.name.toUpperCase();
+      document.getElementById('account-user-email').textContent = profile.email;
+      let favorites = [];
+      try { favorites = JSON.parse(localStorage.getItem('du-favorites') || '[]'); } catch(error) {}
+      document.getElementById('account-favorite-count').textContent = favorites.length;
+    }
+  }
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const name = document.getElementById('account-name').value.trim();
+    const email = document.getElementById('account-email').value.trim();
+    if(!name || !email) return;
+    localStorage.setItem(PROFILE_KEY, JSON.stringify({name, email}));
+    form.reset();
+    renderProfile();
+  });
+  document.getElementById('account-logout').addEventListener('click', () => {
+    localStorage.removeItem(PROFILE_KEY);
+    renderProfile();
+  });
+  document.getElementById('account-favorites').addEventListener('click', () => {
+    document.getElementById('favorites').scrollIntoView({behavior:'smooth'});
+  });
+  window.addEventListener('storage', renderProfile);
+  renderProfile();
+})();
+</script>
+
 </body>
 </html>
