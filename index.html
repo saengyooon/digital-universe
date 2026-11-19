@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DIGITAL UNIVERSE — Space Wallpapers</title>
-<meta name="description" content="DIGITAL UNIVERSE — discover cinematic space wallpapers. One-time Premium all-access is planned.">
+<meta name="description" content="DIGITAL UNIVERSE — discover cinematic space wallpapers. Free Full HD space wallpapers and a planned one-time Premium all-access offer. No online payment is currently enabled.">
 <meta name="theme-color" content="#080716">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%239b7cff'/%3E%3Cstop offset='1' stop-color='%2349d8df'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%23080716'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='url(%23g)' stroke-width='3'/%3E%3Cellipse cx='32' cy='32' rx='27' ry='10' fill='none' stroke='%23d8c7ff' stroke-width='2' transform='rotate(-28 32 32)'/%3E%3Ccircle cx='49' cy='20' r='4' fill='%2349d8df'/%3E%3C/svg%3E">
 
@@ -1540,7 +1540,7 @@ margin-top: 0;
 <div id="du-modal" class="du-modal" aria-hidden="true">
   <div class="du-modal-panel" role="dialog" aria-modal="true" aria-labelledby="du-modal-title">
     <button class="du-modal-close" aria-label="Close">×</button>
-    <img id="du-modal-image" class="du-modal-image" alt="Wallpaper full-screen preview">
+    <img id="du-modal-backdrop" class="du-modal-backdrop" alt="" aria-hidden="true"><img id="du-modal-image" class="du-modal-image" alt="Wallpaper full-screen preview">
     <div class="du-modal-content">
       <div id="du-modal-tag" class="du-modal-tag">WALLPAPER PREVIEW</div>
       <h2 id="du-modal-title">WALLPAPER</h2>
@@ -1561,10 +1561,14 @@ margin-top: 0;
 <style>
 .du-modal{position:fixed;inset:0;z-index:99999;background:rgba(3,4,12,.88);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px}
 .du-modal.open{display:flex}
-.du-modal-panel{position:relative;width:min(1240px,96vw);background:#0d0d20;border:1px solid #7251b9;border-radius:18px;overflow:hidden;box-shadow:0 0 45px rgba(139,92,246,.25);max-height:94vh;overflow-y:auto}
-.du-modal-close{position:absolute;right:14px;top:14px;z-index:2;width:42px;height:42px;border-radius:50%;background:rgba(5,5,20,.75);border:1px solid #a78bfa;color:white;font-size:28px;cursor:pointer}
-.du-modal-image{display:block;width:100%;height:min(68vh,720px);object-fit:contain;object-position:center;background:#05050d}
-.du-modal-content{text-align:center;padding:22px 28px 28px}
+.du-modal-panel{position:relative;width:min(1240px,96vw);background:rgba(13,13,32,.72);border:1px solid #7251b9;border-radius:18px;overflow:hidden;box-shadow:0 0 45px rgba(139,92,246,.25);max-height:94vh;overflow-y:auto}
+.du-modal-close{position:absolute;right:14px;top:14px;z-index:3;width:42px;height:42px;border-radius:50%;background:rgba(5,5,20,.75);border:1px solid #a78bfa;color:white;font-size:28px;cursor:pointer}
+
+.du-modal-panel{isolation:isolate}
+.du-modal-backdrop{position:absolute;inset:-24px;width:calc(100% + 48px);height:calc(100% + 48px);object-fit:cover;filter:blur(24px) brightness(.34);opacity:.8;pointer-events:none;z-index:0}
+.du-modal-image{position:relative;z-index:0;display:block;width:100%;height:min(68vh,720px);object-fit:contain;object-position:center;background:transparent}
+
+.du-modal-content{position:relative;z-index:2;text-align:center;padding:22px 28px 28px}
 .du-modal-tag{color:#a78bfa;letter-spacing:4px;font-size:11px}
 .du-modal-content h2{color:white;letter-spacing:4px;margin:12px 0}
 .du-modal-content p{color:#b8b8d0;line-height:1.7}
@@ -1577,8 +1581,9 @@ margin-top: 0;
 @supports not (height:100dvh){.du-modal.viewer-mode .du-modal-image{max-height:100vh}}
 .du-download-image{display:block;margin:18px auto 0;background:linear-gradient(100deg,#287c72,#36a995);border-color:#6ee7d4}
 .du-modal.viewer-mode{padding:0;background:rgba(0,0,0,.97);backdrop-filter:blur(8px)}
-.du-modal.viewer-mode .du-modal-panel{position:relative;width:100vw;height:100dvh;min-height:100vh;max-height:none;border:0;border-radius:0;background:#05050d;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
-.du-modal.viewer-mode .du-modal-image{display:block;flex:1 1 auto;width:100vw;height:100dvh;min-height:100vh;max-height:100dvh;object-fit:cover;object-position:center;background:#05050d}
+.du-modal.viewer-mode .du-modal-panel{position:relative;width:100vw;height:100dvh;min-height:100vh;max-height:none;border:0;border-radius:0;background:rgba(5,5,13,.28);overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+ .du-modal.viewer-mode .du-modal-backdrop{position:absolute;inset:-28px;width:calc(100% + 56px);height:calc(100% + 56px);object-fit:cover;filter:blur(30px) brightness(.28);opacity:.95}
+.du-modal.viewer-mode .du-modal-image{display:block;position:relative;z-index:1;flex:1 1 auto;width:100vw;height:100dvh;min-height:100vh;max-height:100dvh;object-fit:contain;object-position:center;background:transparent}
 .du-modal.viewer-mode .du-modal-content{position:absolute;left:0;right:0;bottom:0;padding:22px 20px 26px;background:linear-gradient(transparent,rgba(3,4,12,.94) 28%);text-align:center}
 .du-modal.viewer-mode .du-modal-tag{font-size:9px}
 .du-modal.viewer-mode .du-modal-content h2{font-size:clamp(16px,3vw,24px);margin:8px 0}
@@ -1596,14 +1601,15 @@ margin-top: 0;
 .du-checkout-form input:focus{border-color:#a78bfa}
 .du-checkout-form .du-modal-action{width:100%}
 .du-checkout-disclaimer{font-size:11px!important;color:#aaa5c5!important;margin:12px 0!important}
-.du-checkout-result{max-width:430px;margin:18px auto 0;padding:15px;border:1px solid rgba(74,222,128,.35);background:rgba(22,101,52,.13);border-radius:10px;color:#bbf7d0!important;font-size:12px}
-@media(max-width:600px){.du-modal-panel{width:100%;max-height:96vh;border-radius:14px}.du-modal-content{padding:18px 16px 22px}.du-modal-image{height:52vh}.du-modal.viewer-mode .du-modal-panel{width:100vw;height:100dvh;min-height:100vh;max-height:none}.du-modal.viewer-mode .du-modal-image{width:100vw;height:100dvh;min-height:100vh;max-height:100dvh;object-fit:cover}}
+.du-checkout-result{max-width:430px;margin:18px auto 0;padding:15px;border:1px solid rgba(167,139,250,.35);background:rgba(49,38,90,.22);border-radius:10px;color:#d8ccff!important;font-size:12px}
+@media(max-width:600px){.du-modal-panel{width:100%;max-height:96vh;border-radius:14px}.du-modal-content{padding:18px 16px 22px}.du-modal-image{height:52vh}.du-modal.viewer-mode .du-modal-panel{width:100vw;height:100dvh;min-height:100vh;max-height:none}.du-modal.viewer-mode .du-modal-image{width:100vw;height:100dvh;min-height:100vh;max-height:100dvh;object-fit:contain}}
 </style>
 <script>
 (() => {
   const modal = document.getElementById('du-modal');
   if (!modal) return;
   const image = document.getElementById('du-modal-image');
+  const backdrop = document.getElementById('du-modal-backdrop');
   const title = document.getElementById('du-modal-title');
   const description = document.getElementById('du-modal-description');
   const tag = document.getElementById('du-modal-tag');
@@ -1641,6 +1647,7 @@ margin-top: 0;
     currentCard = card;
     currentImageUrl = art.currentSrc || art.src;
     image.src = currentImageUrl;
+    if (backdrop) backdrop.src = currentImageUrl;
     image.alt = art.alt || card.dataset.title || 'Wallpaper';
     title.textContent = card.querySelector('h3')?.textContent || 'WALLPAPER';
     description.textContent = card.querySelector('p')?.textContent || '';
@@ -1648,7 +1655,7 @@ margin-top: 0;
     modal.classList.toggle('viewer-mode', mode === 'download');
     if (mode === 'premium'){
       tag.textContent = 'PREMIUM COLLECTION · ALL-ACCESS';
-      description.textContent = 'One payment unlocks the entire Premium wallpaper collection — not just this image. 99 ₽ once. No subscription.';
+      description.textContent = 'One payment is planned to unlock the entire Premium wallpaper collection — not just this image. 99 ₽ once. No subscription. Online payment and secure access are not active yet.';
       checkoutOpen.hidden = false;
       action.textContent = 'CLOSE';
     } else if (mode === 'download'){
@@ -1704,10 +1711,16 @@ margin-top: 0;
         downloadButton.disabled = false;
       }, 1800);
     } catch(error) {
-      // Keep the user in the designed full-screen viewer instead of opening a bare image tab.
+      // The image host may block cross-origin blob downloads. Offer the original image
+      // in a new tab so the visitor can use the browser's Save image option.
       downloadButton.disabled = false;
-      downloadButton.textContent = 'RIGHT-CLICK IMAGE TO SAVE';
-      downloadButton.title = 'The image host blocks direct downloads. Right-click the image and choose Save image as.';
+      downloadButton.textContent = 'OPEN IMAGE TO SAVE';
+      downloadButton.title = 'Direct download is blocked by the image host. Open the original image, then use Save image as.';
+      const fallback = document.createElement('a');
+      fallback.href = currentImageUrl;
+      fallback.target = '_blank';
+      fallback.rel = 'noopener noreferrer';
+      fallback.click();
     }
   });
 
@@ -1740,7 +1753,7 @@ margin-top: 0;
     requests.push(request);
     localStorage.setItem('du-checkout-requests', JSON.stringify(requests));
     checkoutForm.hidden = true;
-    checkoutResult.textContent = 'Your interest request has been saved in this browser. The planned offer is one-time 99 ₽ access to the entire Premium collection. No payment was made and no Premium access was activated. Online checkout is not configured yet.';
+    checkoutResult.textContent = 'DEMO REQUEST SAVED ON THIS DEVICE ONLY. No payment was made, no order was sent to the shop, and Premium access was NOT activated. The planned offer is one-time 99 ₽ access to the entire Premium collection. Secure online checkout must be connected before accepting customers.';
     if (PAYMENT_CHECKOUT_URL) window.location.assign(PAYMENT_CHECKOUT_URL);
     checkoutResult.hidden = false;
     window.dispatchEvent(new Event('du-orders-updated'));
