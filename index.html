@@ -997,6 +997,14 @@ window.addEventListener('resize',()=>{
         <div><strong id="account-favorite-count">0</strong><span>FAVORITES</span></div>
         <div><strong>FREE</strong><span>MEMBERSHIP</span></div>
       </div>
+      <div class="account-rewards">
+        <div class="account-rewards-head"><span>REWARDS WALLET</span><strong><b id="account-reward-points">0</b> PTS</strong></div>
+        <p>Demo reward points only. They are not money, cannot be withdrawn or transferred, and have no cash value.</p>
+      </div>
+      <div class="account-orders">
+        <div class="account-orders-title">ORDER HISTORY</div>
+        <div id="account-order-list"><p class="account-empty-orders">No orders yet.</p></div>
+      </div>
       <button type="button" id="account-favorites" class="account-primary">VIEW MY FAVORITES</button>
       <button type="button" id="account-logout" class="account-secondary">LOG OUT</button>
     </div>
@@ -1030,6 +1038,16 @@ window.addEventListener('resize',()=>{
 .account-stats strong{font-family:Orbitron,sans-serif;font-size:20px;color:#d6c6ff}
 .account-stats span{margin-top:7px;font-size:9px;letter-spacing:2px;color:#8583a4}
 .account-disclaimer{max-width:590px;margin:22px auto 0;color:#77758f;font-size:11px;line-height:1.8}
+.account-rewards,.account-orders{margin-top:16px;padding:18px;text-align:left;background:rgba(7,8,24,.72);border:1px solid rgba(167,139,250,.22);border-radius:13px}
+.account-rewards-head{display:flex;justify-content:space-between;gap:12px;align-items:center;color:#b9a8f5;font-size:10px;letter-spacing:2px}
+.account-rewards-head strong{font-family:Orbitron,sans-serif;color:#e3d7ff;font-size:16px;white-space:nowrap}
+.account-rewards-head strong b{font-size:22px}
+.account-rewards p,.account-empty-orders{margin:10px 0 0;color:#8583a4;font-size:11px;line-height:1.7}
+.account-orders-title{color:#b9a8f5;font-size:10px;letter-spacing:2px;margin-bottom:10px}
+.account-order-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid rgba(167,139,250,.12);color:#ddd6fe;font-size:11px}
+.account-order-row small{display:block;color:#8583a4;margin-top:4px}
+.account-order-status{color:#a78bfa;text-align:right;white-space:nowrap}
+
 @media(max-width:600px){.account-section{padding:65px 16px 80px}.account-panel{padding:28px 20px}}
 </style>
 <style>
@@ -1310,66 +1328,67 @@ margin-top: 0;
 }
 </style>
 <script>
-const favoriteButtons = document.querySelectorAll('.favorite-btn');
-const favoritesList = document.getElementById('favorites-list');
+(() => {
+  const FAVORITES_KEY = 'du-favorites';
+  const favoritesList = document.getElementById('favorites-list');
+  const gallery = document.getElementById('space-gallery');
+  if (!favoritesList || !gallery) return;
 
-function getFavorites() {
-  return JSON.parse(localStorage.getItem('du-favorites') || '[]');
-}
-
-function saveFavorites(favorites) {
-  localStorage.setItem('du-favorites', JSON.stringify(favorites));
-}
-
-function renderFavorites() {
-  const favorites = getFavorites();
-  favoritesList.innerHTML = '';
-
-  favoritesList.style.display = 'grid';
-  favoritesList.style.gridTemplateColumns = 'repeat(auto-fit, minmax(230px, 1fr))';
-  favoritesList.style.gap = '25px';
-  favoritesList.style.maxWidth = '1100px';
-  favoritesList.style.margin = '30px auto 0';
-
-  favorites.forEach(id => {
-    const button = document.querySelector('.favorite-btn[data-id="' + id + '"]');
-
-    if (button) {
-      const card = button.closest('.art-card').cloneNode(true);
-      card.querySelector('.favorite-btn').remove();
-      favoritesList.appendChild(card);
-    }
-  });
-
-  if (favorites.length === 0) {
-    favoritesList.innerHTML = '<p style="color:#9296b8; grid-column:1/-1;">Your favorites list is empty. Tap ♡ on any wallpaper you like.</p>';
+  function readFavorites(){
+    try {
+      const value = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+      return Array.isArray(value) ? value : [];
+    } catch(error) { return []; }
   }
-}
-
-favoriteButtons.forEach(button => {
-  const id = button.dataset.id;
-
-  if (getFavorites().includes(id)) {
-    button.textContent = '♥';
-  }
-
-  button.addEventListener('click', () => {
-    let favorites = getFavorites();
-
-    if (favorites.includes(id)) {
-      favorites = favorites.filter(item => item !== id);
-      button.textContent = '♡';
-    } else {
-      favorites.push(id);
-      button.textContent = '♥';
-    }
-
-    saveFavorites(favorites);
+  function writeFavorites(items){
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify([...new Set(items)]));
     renderFavorites();
+    syncFavoriteButtons();
+    window.dispatchEvent(new Event('du-favorites-updated'));
+  }
+  function syncFavoriteButtons(){
+    const saved = readFavorites();
+    document.querySelectorAll('.favorite-btn[data-id]').forEach(button => {
+      const active = saved.includes(button.dataset.id);
+      button.textContent = active ? '♥' : '♡';
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      button.setAttribute('aria-label', active ? 'Remove from favorites' : 'Add to favorites');
+    });
+  }
+  function renderFavorites(){
+    const saved = readFavorites();
+    favoritesList.replaceChildren();
+    favoritesList.style.display = 'grid';
+    favoritesList.style.gridTemplateColumns = 'repeat(auto-fit, minmax(min(100%, 230px), 1fr))';
+    favoritesList.style.gap = '25px';
+    favoritesList.style.maxWidth = '1100px';
+    favoritesList.style.margin = '30px auto 0';
+    saved.forEach(id => {
+      const sourceButton = [...gallery.querySelectorAll('.favorite-btn')].find(button => button.dataset.id === id);
+      const sourceCard = sourceButton?.closest('.art-card');
+      if (sourceCard) favoritesList.appendChild(sourceCard.cloneNode(true));
+    });
+    if (!favoritesList.children.length) {
+      const empty = document.createElement('p');
+      empty.textContent = 'Your favorites list is empty. Tap ♡ on any wallpaper you like.';
+      empty.style.cssText = 'color:#9296b8;grid-column:1/-1';
+      favoritesList.appendChild(empty);
+    }
+  }
+  document.addEventListener('click', event => {
+    const button = event.target.closest('.favorite-btn[data-id]');
+    if (!button) return;
+    event.preventDefault();
+    const id = button.dataset.id;
+    const saved = readFavorites();
+    writeFavorites(saved.includes(id) ? saved.filter(item => item !== id) : [...saved, id]);
   });
-});
-
-renderFavorites();
+  window.addEventListener('storage', event => {
+    if (!event.key || event.key === FAVORITES_KEY) { renderFavorites(); syncFavoriteButtons(); }
+  });
+  renderFavorites();
+  syncFavoriteButtons();
+})();
 </script>
 
 <script>
@@ -1444,11 +1463,12 @@ renderFavorites();
 <div id="du-modal" class="du-modal" aria-hidden="true">
   <div class="du-modal-panel" role="dialog" aria-modal="true" aria-labelledby="du-modal-title">
     <button class="du-modal-close" aria-label="Close">×</button>
-    <div id="du-modal-image" class="du-modal-image"></div>
+    <img id="du-modal-image" class="du-modal-image" alt="Wallpaper full-screen preview">
     <div class="du-modal-content">
       <div id="du-modal-tag" class="du-modal-tag">WALLPAPER PREVIEW</div>
       <h2 id="du-modal-title">WALLPAPER</h2>
       <p id="du-modal-description"></p>
+      <button id="du-download-image" class="du-modal-action du-download-image" type="button" hidden>DOWNLOAD WALLPAPER</button>
       <button id="du-checkout-open" class="du-modal-action du-checkout-open" type="button" hidden>CONTINUE TO CHECKOUT · 99 ₽</button>
       <form id="du-checkout-form" class="du-checkout-form" hidden>
         <label for="du-checkout-email">EMAIL FOR YOUR ORDER</label>
@@ -1466,7 +1486,7 @@ renderFavorites();
 .du-modal.open{display:flex}
 .du-modal-panel{position:relative;width:min(850px,100%);background:#0d0d20;border:1px solid #7251b9;border-radius:18px;overflow:hidden;box-shadow:0 0 45px rgba(139,92,246,.25);max-height:90vh;overflow-y:auto}
 .du-modal-close{position:absolute;right:14px;top:14px;z-index:2;width:42px;height:42px;border-radius:50%;background:rgba(5,5,20,.75);border:1px solid #a78bfa;color:white;font-size:28px;cursor:pointer}
-.du-modal-image{width:100%;height:min(48vh,420px);background-position:center;background-size:cover;background-color:#17172f}
+.du-modal-image{display:block;width:100%;height:min(48vh,420px);object-fit:contain;object-position:center;background:#05050d}
 .du-modal-content{text-align:center;padding:25px 28px 30px}
 .du-modal-tag{color:#a78bfa;letter-spacing:4px;font-size:11px}
 .du-modal-content h2{color:white;letter-spacing:4px;margin:12px 0}
@@ -1474,6 +1494,23 @@ renderFavorites();
 .du-modal-action{margin-top:15px;padding:14px 28px;background:#17102d;border:1px solid #8b5cf6;border-radius:8px;color:white;letter-spacing:2px;cursor:pointer}
 .du-modal-action:hover{background:#8b5cf6}
 .art-placeholder{cursor:zoom-in}
+
+.du-modal [hidden]{display:none!important}
+.du-modal button:disabled{opacity:.65;cursor:wait}
+@supports not (height:100dvh){.du-modal.viewer-mode .du-modal-image{max-height:100vh}}
+.du-download-image{display:block;margin:18px auto 0;background:linear-gradient(100deg,#287c72,#36a995);border-color:#6ee7d4}
+.du-modal.viewer-mode{padding:0;background:rgba(0,0,0,.97);backdrop-filter:blur(8px)}
+.du-modal.viewer-mode .du-modal-panel{width:100%;height:100%;max-height:none;border:0;border-radius:0;background:#05050d;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.du-modal.viewer-mode .du-modal-image{display:block;width:100%;height:100%;max-height:100dvh;object-fit:contain;object-position:center;background:#05050d}
+.du-modal.viewer-mode .du-modal-content{position:absolute;left:0;right:0;bottom:0;padding:22px 20px 26px;background:linear-gradient(transparent,rgba(3,4,12,.94) 28%);text-align:center}
+.du-modal.viewer-mode .du-modal-tag{font-size:9px}
+.du-modal.viewer-mode .du-modal-content h2{font-size:clamp(16px,3vw,24px);margin:8px 0}
+.du-modal.viewer-mode .du-modal-content p{display:none}
+.du-modal.viewer-mode .du-modal-close{position:fixed;top:20px;right:20px;width:46px;height:46px}
+.du-modal.viewer-mode .du-modal-action{margin:8px 6px 0}
+.du-modal.viewer-mode .du-download-image{display:inline-block}
+@media(max-width:600px){.du-modal.viewer-mode .du-modal-content{padding:16px 12px 22px}.du-modal.viewer-mode .du-modal-close{top:12px;right:12px}}
+
 
 .du-checkout-open{display:block;margin:20px auto 0;background:linear-gradient(100deg,#6847bd,#8b5cf6);border-color:#b9a0ff}
 .du-checkout-form{max-width:430px;margin:22px auto 0;text-align:left;padding:20px;background:rgba(5,6,20,.72);border:1px solid rgba(167,139,250,.28);border-radius:12px}
@@ -1483,79 +1520,148 @@ renderFavorites();
 .du-checkout-form .du-modal-action{width:100%}
 .du-checkout-disclaimer{font-size:11px!important;color:#aaa5c5!important;margin:12px 0!important}
 .du-checkout-result{max-width:430px;margin:18px auto 0;padding:15px;border:1px solid rgba(74,222,128,.35);background:rgba(22,101,52,.13);border-radius:10px;color:#bbf7d0!important;font-size:12px}
-@media(max-width:600px){.du-modal-content{padding:20px}.du-modal-image{height:35vh}}
+@media(max-width:600px){.du-modal-content{padding:20px}.du-modal-image{height:35vh}.du-modal.viewer-mode .du-modal-image{height:100dvh}}
 </style>
 <script>
 (() => {
   const modal = document.getElementById('du-modal');
+  if (!modal) return;
   const image = document.getElementById('du-modal-image');
   const title = document.getElementById('du-modal-title');
   const description = document.getElementById('du-modal-description');
   const tag = document.getElementById('du-modal-tag');
   const action = document.getElementById('du-modal-action');
   const closeButton = modal.querySelector('.du-modal-close');
+  const downloadButton = document.getElementById('du-download-image');
   const checkoutOpen = document.getElementById('du-checkout-open');
   const checkoutForm = document.getElementById('du-checkout-form');
   const checkoutEmail = document.getElementById('du-checkout-email');
   const checkoutResult = document.getElementById('du-checkout-result');
   let currentCard = null;
-  function close(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}
-  function resetCheckout(){
-    checkoutForm.hidden=true;checkoutOpen.hidden=true;checkoutResult.hidden=true;
-    checkoutForm.reset();checkoutOpen.style.display='none';
+  let currentImageUrl = '';
+  let previousBodyOverflow = '';
+
+  function close(){
+    modal.classList.remove('open', 'viewer-mode');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = previousBodyOverflow;
+  }
+  function resetActions(){
+    checkoutForm.hidden = true;
+    checkoutOpen.hidden = true;
+    checkoutResult.hidden = true;
+    downloadButton.hidden = true;
+    checkoutForm.reset();
+    checkoutOpen.style.display = '';
+    downloadButton.disabled = false;
+    downloadButton.textContent = 'DOWNLOAD WALLPAPER';
   }
   function show(card, mode){
-    currentCard=card;
-    const art=card.querySelector('.art-placeholder');
-    const imageUrl=art.currentSrc || art.src;
-    image.style.backgroundImage='url("'+imageUrl+'")';
-    title.textContent=card.querySelector('h3')?.textContent || 'WALLPAPER';
-    description.textContent=card.querySelector('p')?.textContent || '';
-    resetCheckout();
-    if(mode==='premium'){
-      tag.textContent='PREMIUM WALLPAPER · 4K';
-      description.textContent='Full version · One-time price: 99 ₽. No subscription.';
-      checkoutOpen.hidden=false;checkoutOpen.style.display='block';
-      action.textContent='CLOSE';
+    const art = card.querySelector('.art-placeholder');
+    if (!art) return;
+    currentCard = card;
+    currentImageUrl = art.currentSrc || art.src;
+    image.src = currentImageUrl;
+    image.alt = art.alt || card.dataset.title || 'Wallpaper';
+    title.textContent = card.querySelector('h3')?.textContent || 'WALLPAPER';
+    description.textContent = card.querySelector('p')?.textContent || '';
+    resetActions();
+    modal.classList.toggle('viewer-mode', mode === 'download');
+    if (mode === 'premium'){
+      tag.textContent = 'PREMIUM WALLPAPER · 4K';
+      description.textContent = 'Full version · One-time price: 99 ₽. No subscription.';
+      checkoutOpen.hidden = false;
+      action.textContent = 'CLOSE';
+    } else if (mode === 'download'){
+      tag.textContent = 'FULL-SCREEN WALLPAPER';
+      description.textContent = 'Preview your wallpaper, then save the image to your device.';
+      downloadButton.hidden = false;
+      action.textContent = 'CLOSE';
     } else {
-      tag.textContent='WALLPAPER PREVIEW';
-      action.textContent='CLOSE PREVIEW';
+      tag.textContent = 'WALLPAPER PREVIEW';
+      action.textContent = 'CLOSE PREVIEW';
     }
-    modal.classList.add('open');modal.setAttribute('aria-hidden','false');
+    previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
   }
-  document.querySelectorAll('#space-gallery .art-card').forEach(card=>{
-    const art=card.querySelector('.art-placeholder');
-    art.addEventListener('click',()=>show(card,'preview'));
-    const freeButton=card.querySelector('.download-btn');
-    if(freeButton){
-      freeButton.addEventListener('click',()=>{
-        const url=art.currentSrc || art.src;
-        if(!url){show(card,'preview');return;}
-        const link=document.createElement('a');link.href=url;link.download=card.dataset.title.replace(/\s+/g,'-')+'.png';
-        document.body.appendChild(link);link.click();link.remove();
-      });
-    }
-    const premiumButton=card.querySelector('.premium-btn');
-    if(premiumButton)premiumButton.addEventListener('click',()=>show(card,'premium'));
+
+  // Delegation keeps buttons working in both the main catalog and cloned Favorites cards.
+  document.addEventListener('click', event => {
+    const imageTarget = event.target.closest('#space-gallery .art-placeholder, #favorites-list .art-placeholder');
+    const freeButton = event.target.closest('#space-gallery .download-btn, #favorites-list .download-btn');
+    const premiumButton = event.target.closest('#space-gallery .premium-btn, #favorites-list .premium-btn');
+    if (freeButton){ event.preventDefault(); show(freeButton.closest('.art-card'), 'download'); }
+    else if (premiumButton){ event.preventDefault(); show(premiumButton.closest('.art-card'), 'premium'); }
+    else if (imageTarget){ show(imageTarget.closest('.art-card'), 'preview'); }
   });
-  checkoutOpen.addEventListener('click',()=>{
-    checkoutOpen.hidden=true;checkoutOpen.style.display='none';checkoutForm.hidden=false;
-    let profile=null;try{profile=JSON.parse(localStorage.getItem('du-local-profile')||'null')}catch(error){}
-    if(profile&&profile.email)checkoutEmail.value=profile.email;
+
+  downloadButton.addEventListener('click', async () => {
+    if (!currentImageUrl) return;
+    const fileName = (currentCard?.dataset.title || 'wallpaper').trim().replace(/[^a-z0-9-]+/gi, '-').toLowerCase() + '.png';
+    downloadButton.disabled = true;
+    downloadButton.textContent = 'PREPARING DOWNLOAD...';
+    try {
+      const response = await fetch(currentImageUrl, { mode: 'cors' });
+      if (!response.ok) throw new Error('Remote host did not allow download');
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
+      downloadButton.textContent = 'DOWNLOAD STARTED';
+      window.setTimeout(() => {
+        if (modal.classList.contains('open')) downloadButton.textContent = 'DOWNLOAD WALLPAPER';
+        downloadButton.disabled = false;
+      }, 1800);
+    } catch(error) {
+      // Keep the user in the designed full-screen viewer instead of opening a bare image tab.
+      downloadButton.disabled = false;
+      downloadButton.textContent = 'RIGHT-CLICK IMAGE TO SAVE';
+      downloadButton.title = 'The image host blocks direct downloads. Right-click the image and choose Save image as.';
+    }
+  });
+
+  checkoutOpen.addEventListener('click', () => {
+    checkoutOpen.hidden = true;
+    checkoutForm.hidden = false;
+    let profile = null;
+    try { profile = JSON.parse(localStorage.getItem('du-local-profile') || 'null'); } catch(error) {}
+    if (profile?.email) checkoutEmail.value = profile.email;
     checkoutEmail.focus();
   });
-  checkoutForm.addEventListener('submit',event=>{
+  checkoutForm.addEventListener('submit', event => {
     event.preventDefault();
-    const email=checkoutEmail.value.trim();
-    if(!email)return;
-    const request={id:'DU-'+Date.now(),wallpaper:currentCard?.dataset.title||title.textContent,email,price:99,currency:'RUB',status:'checkout_requested',createdAt:new Date().toISOString()};
-    let requests=[];try{requests=JSON.parse(localStorage.getItem('du-checkout-requests')||'[]')}catch(error){}
-    requests.push(request);localStorage.setItem('du-checkout-requests',JSON.stringify(requests));
-    checkoutForm.hidden=true;checkoutResult.textContent='Your checkout request has been saved in this browser. No payment was made. Payment processing will be available after the secure payment provider is connected.';checkoutResult.hidden=false;
+    const email = checkoutEmail.value.trim();
+    if (!email || !checkoutForm.reportValidity()) return;
+    const request = {
+      id: 'DU-' + Date.now(),
+      wallpaper: currentCard?.dataset.title || title.textContent,
+      email,
+      price: 99,
+      currency: 'RUB',
+      status: 'checkout_requested',
+      createdAt: new Date().toISOString()
+    };
+    let requests = [];
+    try { requests = JSON.parse(localStorage.getItem('du-checkout-requests') || '[]'); } catch(error) {}
+    if (!Array.isArray(requests)) requests = [];
+    requests.push(request);
+    localStorage.setItem('du-checkout-requests', JSON.stringify(requests));
+    checkoutForm.hidden = true;
+    checkoutResult.textContent = 'Your checkout request has been saved in this browser. No payment was made. Payment processing will be available after the secure payment provider is connected.';
+    checkoutResult.hidden = false;
+    window.dispatchEvent(new Event('du-orders-updated'));
   });
-  closeButton.addEventListener('click',close);action.addEventListener('click',close);
-  modal.addEventListener('click',e=>{if(e.target===modal)close();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close();});
+  closeButton.addEventListener('click', close);
+  action.addEventListener('click', close);
+  modal.addEventListener('click', event => { if (event.target === modal) close(); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape' && modal.classList.contains('open')) close(); });
 })();
 </script>
 
@@ -1581,6 +1687,22 @@ renderFavorites();
       let favorites = [];
       try { favorites = JSON.parse(localStorage.getItem('du-favorites') || '[]'); } catch(error) {}
       document.getElementById('account-favorite-count').textContent = favorites.length;
+      const points = Number(localStorage.getItem('du-reward-points') || 0);
+      document.getElementById('account-reward-points').textContent = Number.isFinite(points) ? points : 0;
+      let orders = [];
+      try { orders = JSON.parse(localStorage.getItem('du-checkout-requests') || '[]'); } catch(error) {}
+      const orderList = document.getElementById('account-order-list');
+      orderList.innerHTML = '';
+      if (!orders.length) orderList.innerHTML = '<p class="account-empty-orders">No orders yet.</p>';
+      else orders.slice().reverse().slice(0,5).forEach(order => {
+        const row=document.createElement('div');row.className='account-order-row';
+        const details=document.createElement('div');
+        const name=document.createElement('strong');name.textContent=String(order.wallpaper||'Wallpaper').replace(/-/g,' ').toUpperCase();
+        const date=document.createElement('small');date.textContent=order.createdAt?new Date(order.createdAt).toLocaleDateString():'Date unavailable';
+        details.append(name,date);
+        const status=document.createElement('span');status.className='account-order-status';status.textContent='REQUEST SAVED';
+        row.append(details,status);orderList.appendChild(row);
+      });
     }
   }
   form.addEventListener('submit', event => {
@@ -1600,6 +1722,8 @@ renderFavorites();
     document.getElementById('favorites').scrollIntoView({behavior:'smooth'});
   });
   window.addEventListener('storage', renderProfile);
+  window.addEventListener('du-orders-updated', renderProfile);
+  window.addEventListener('du-favorites-updated', renderProfile);
   renderProfile();
 })();
 </script>
