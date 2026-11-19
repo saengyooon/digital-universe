@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -157,6 +157,10 @@ header{top:22px}
 #space-gallery .art-card .favorite-btn{position:absolute;top:23px;right:23px;z-index:3}
 #space-gallery .gallery-grid{align-items:stretch}
 
+
+/* ACCOUNT NAVIGATION FIX */
+html{scroll-behavior:smooth}
+#account{scroll-margin-top:105px}
 </style>
 </head>
 
@@ -174,7 +178,7 @@ header{top:22px}
 
   <a href="#favorites" onclick="document.getElementById('favorites').scrollIntoView({behavior:'smooth'}); return false;">FAVORITES</a>
 
-  <a href="#account" onclick="document.getElementById('account').scrollIntoView({behavior:'smooth'}); return false;">ACCOUNT</a>
+  <a href="#account" id="account-nav-link">ACCOUNT</a>
 </nav>
 
   <div class="status"><span>●</span> SYSTEM ONLINE</div>
@@ -668,17 +672,17 @@ window.addEventListener('resize',()=>{
     <h2>SPACE WALLPAPERS</h2>
 
     <p class="gallery-description">
-      Открой для себя красоту далёких миров.
-      Коллекция авторских космических обоев.
+      Discover the beauty of distant worlds.
+      A curated collection of original space wallpapers.
     </p>
 
 
     <div class="catalog-controls">
       <div class="catalog-search-wrap">
         <span class="catalog-search-icon">⌕</span>
-        <input type="search" id="wallpaper-search" class="catalog-search" placeholder="SEARCH WALLPAPERS..." aria-label="Поиск обоев">
+        <input type="search" id="wallpaper-search" class="catalog-search" placeholder="SEARCH WALLPAPERS..." aria-label="Search wallpapers">
       </div>
-      <div class="catalog-filters" role="group" aria-label="Фильтр обоев">
+      <div class="catalog-filters" role="group" aria-label="Wallpaper filters">
         <button class="catalog-filter active" data-filter="all">ALL</button>
         <button class="catalog-filter" data-filter="free">FREE</button>
         <button class="catalog-filter" data-filter="premium">PREMIUM</button>
@@ -695,10 +699,10 @@ window.addEventListener('resize',()=>{
     <div class="gallery-grid">
 
       <article class="art-card" data-category="free" data-title="nebula dream">
-        <button class="favorite-btn" data-id="nebula-dream" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="nebula-dream" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/7NXCZTSL/2026-11-19-141759976.png" alt="NEBULA DREAM" loading="lazy" decoding="async">
         <h3>NEBULA DREAM</h3>
-        <p>Сине-фиолетовая туманность и далёкие звёзды</p>
+        <p>A blue and violet nebula surrounded by distant stars</p>
         <div class="wallpaper-info">
           <span>1920 × 1080 · FULL HD</span>
           <span class="free-label">FREE</span>
@@ -707,10 +711,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="free" data-title="moon horizon">
-        <button class="favorite-btn" data-id="moon-horizon" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="moon-horizon" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/zH42hnJH/2026-11-19-141900223.png" alt="MOON HORIZON" loading="lazy" decoding="async">
         <h3>MOON HORIZON</h3>
-        <p>Лунный горизонт в сиянии далёких звёзд</p>
+        <p>A lunar horizon beneath a field of distant stars</p>
         <div class="wallpaper-info">
           <span>1920 × 1080 · FULL HD</span>
           <span class="free-label">FREE</span>
@@ -719,10 +723,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="free" data-title="red planet">
-        <button class="favorite-btn" data-id="red-planet" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="red-planet" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/Q3w28R5v/2026-11-19-142005868.png" alt="RED PLANET" loading="lazy" decoding="async">
         <h3>RED PLANET</h3>
-        <p>Красная планета в глубинах космоса</p>
+        <p>A red planet drifting through deep space</p>
         <div class="wallpaper-info">
           <span>1920 × 1080 · FULL HD</span>
           <span class="free-label">FREE</span>
@@ -731,10 +735,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="free" data-title="stellar cloud">
-        <button class="favorite-btn" data-id="stellar-cloud" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="stellar-cloud" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/xqDRm0K6/2026-11-19-142050323.png" alt="STELLAR CLOUD" loading="lazy" decoding="async">
         <h3>STELLAR CLOUD</h3>
-        <p>Облака звёздной пыли и космический свет</p>
+        <p>Clouds of stardust illuminated by cosmic light</p>
         <div class="wallpaper-info">
           <span>1920 × 1080 · FULL HD</span>
           <span class="free-label">FREE</span>
@@ -743,10 +747,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="free" data-title="saturn veil">
-        <button class="favorite-btn" data-id="saturn-veil" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="saturn-veil" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/5hZMjtQL/2026-11-19-142142879.png" alt="SATURN VEIL" loading="lazy" decoding="async">
         <h3>SATURN VEIL</h3>
-        <p>Величественная планета с кольцами</p>
+        <p>A majestic planet wrapped in rings</p>
         <div class="wallpaper-info">
           <span>1920 × 1080 · FULL HD</span>
           <span class="free-label">FREE</span>
@@ -755,10 +759,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="purple orbit">
-        <button class="favorite-btn" data-id="purple-orbit" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="purple-orbit" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/tTJQnfd4/2026-11-19-142242152.png" alt="PURPLE ORBIT" loading="lazy" decoding="async">
         <h3>PURPLE ORBIT</h3>
-        <p>Фиолетовая планета и светящиеся орбиты</p>
+        <p>A purple planet surrounded by glowing orbits</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -767,10 +771,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="event horizon">
-        <button class="favorite-btn" data-id="event-horizon" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="event-horizon" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/Cj0H7Y7/2026-11-19-142318396.png" alt="EVENT HORIZON" loading="lazy" decoding="async">
         <h3>EVENT HORIZON</h3>
-        <p>Чёрная дыра и сияющий аккреционный диск</p>
+        <p>A black hole with a radiant accretion disk</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -779,10 +783,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="emerald nebula">
-        <button class="favorite-btn" data-id="emerald-nebula" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="emerald-nebula" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/wNRfMyPH/2026-11-19-142355696.png" alt="EMERALD NEBULA" loading="lazy" decoding="async">
         <h3>EMERALD NEBULA</h3>
-        <p>Изумрудная туманность</p>
+        <p>An emerald-colored nebula</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -791,10 +795,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="solar crown">
-        <button class="favorite-btn" data-id="solar-crown" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="solar-crown" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/xqxpSkZZ/2026-11-19-142429084.png" alt="SOLAR CROWN" loading="lazy" decoding="async">
         <h3>SOLAR CROWN</h3>
-        <p>Золотое сияние далёкой звезды</p>
+        <p>The golden glow of a distant star</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -803,10 +807,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="frozen world">
-        <button class="favorite-btn" data-id="frozen-world" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="frozen-world" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/Dg425hDT/2026-11-19-142458388.png" alt="FROZEN WORLD" loading="lazy" decoding="async">
         <h3>FROZEN WORLD</h3>
-        <p>Ледяная планета в холодном свете</p>
+        <p>An icy planet beneath a cold cosmic glow</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -815,10 +819,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="cosmic fire">
-        <button class="favorite-btn" data-id="cosmic-fire" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="cosmic-fire" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/9kGHg4bh/2026-11-19-142527260.png" alt="COSMIC FIRE" loading="lazy" decoding="async">
         <h3>COSMIC FIRE</h3>
-        <p>Огненные облака и вспышки энергии</p>
+        <p>Fiery clouds and bursts of energy</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -827,10 +831,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="void">
-        <button class="favorite-btn" data-id="void" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="void" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/zTL2LCkr/2026-11-19-142603560.png" alt="VOID" loading="lazy" decoding="async">
         <h3>VOID</h3>
-        <p>Минималистичный тёмный космос</p>
+        <p>Minimalist dark space</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -839,10 +843,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="galactic spiral">
-        <button class="favorite-btn" data-id="galactic-spiral" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="galactic-spiral" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/4gfD15LH/2026-11-19-142636439.png" alt="GALACTIC SPIRAL" loading="lazy" decoding="async">
         <h3>GALACTIC SPIRAL</h3>
-        <p>Спиральная галактика и яркое ядро</p>
+        <p>A spiral galaxy with a brilliant core</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -851,10 +855,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="twin moons">
-        <button class="favorite-btn" data-id="twin-moons" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="twin-moons" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/fdp56Ppt/2026-11-19-142706273.png" alt="TWIN MOONS" loading="lazy" decoding="async">
         <h3>TWIN MOONS</h3>
-        <p>Две луны над далёким миром</p>
+        <p>Two moons above a distant world</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -863,10 +867,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="celestial gate">
-        <button class="favorite-btn" data-id="celestial-gate" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="celestial-gate" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/Lh0rsYhF/2026-11-19-142740947.png" alt="CELESTIAL GATE" loading="lazy" decoding="async">
         <h3>CELESTIAL GATE</h3>
-        <p>Светящийся портал в космической пустоте</p>
+        <p>A glowing portal in the cosmic void</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -875,10 +879,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="pink universe">
-        <button class="favorite-btn" data-id="pink-universe" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="pink-universe" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/Cs7QVKJp/2026-11-19-142828847.png" alt="PINK UNIVERSE" loading="lazy" decoding="async">
         <h3>PINK UNIVERSE</h3>
-        <p>Розовая туманность и звёздная пыль</p>
+        <p>A pink nebula surrounded by stardust</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -887,10 +891,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="asteroid king">
-        <button class="favorite-btn" data-id="asteroid-king" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="asteroid-king" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/kg36Sdhz/2026-11-19-142859787.png" alt="ASTEROID KING" loading="lazy" decoding="async">
         <h3>ASTEROID KING</h3>
-        <p>Планета среди астероидного пояса</p>
+        <p>A planet surrounded by an asteroid belt</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -899,10 +903,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="deep space">
-        <button class="favorite-btn" data-id="deep-space" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="deep-space" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/dwfj62r6/2026-11-19-142935895.png" alt="DEEP SPACE" loading="lazy" decoding="async">
         <h3>DEEP SPACE</h3>
-        <p>Глубокий синий космос и далёкие звёзды</p>
+        <p>Deep blue space filled with distant stars</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -911,10 +915,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="last sunrise">
-        <button class="favorite-btn" data-id="last-sunrise" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="last-sunrise" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/gNfLxDX/2026-11-19-143008204.png" alt="LAST SUNRISE" loading="lazy" decoding="async">
         <h3>LAST SUNRISE</h3>
-        <p>Планета на фоне огромного солнца</p>
+        <p>A planet silhouetted against a massive sun</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -923,10 +927,10 @@ window.addEventListener('resize',()=>{
       </article>
 
       <article class="art-card" data-category="premium" data-title="cosmic rings">
-        <button class="favorite-btn" data-id="cosmic-rings" aria-label="Добавить в избранное">♡</button>
+        <button class="favorite-btn" data-id="cosmic-rings" aria-label="Add to favorites">♡</button>
         <img class="art-placeholder" src="https://i.ibb.co/9kMqfR9J/2026-11-19-143116563.png" alt="COSMIC RINGS" loading="lazy" decoding="async">
         <h3>COSMIC RINGS</h3>
-        <p>Фантастическая планета с сияющими кольцами</p>
+        <p>A fantastical planet with radiant rings</p>
         <div class="wallpaper-info">
           <span>3840 × 2160 · 4K</span>
           <span class="premium-label">PREMIUM</span>
@@ -957,7 +961,7 @@ window.addEventListener('resize',()=>{
   ">MY FAVORITES ♡</h2>
 
   <p style="color:#9296b8;">
-    Здесь будут храниться твои любимые космические обои.
+    Your favorite space wallpapers will appear here.
   </p>
 
   <div id="favorites-list"></div>
@@ -968,20 +972,20 @@ window.addEventListener('resize',()=>{
   <div class="account-shell">
     <div class="account-kicker">YOUR PERSONAL SPACE</div>
     <h2>UNIVERSE ACCOUNT</h2>
-    <p class="account-intro">Создай профиль, чтобы видеть свои данные и быстро возвращаться к избранным мирам.</p>
+    <p class="account-intro">Create a profile to view your details and quickly return to your favorite worlds.</p>
 
     <div id="account-guest" class="account-panel">
       <div class="account-orbit">✦</div>
       <h3>WELCOME, EXPLORER</h3>
-      <p>Укажи имя и электронную почту — профиль сохранится в этом браузере.</p>
+      <p>Enter your name and email address. Your profile will be saved in this browser.</p>
       <form id="account-form" class="account-form">
-        <label for="account-name">ТВОЁ ИМЯ</label>
-        <input id="account-name" name="name" type="text" maxlength="40" placeholder="Например, Alex" required autocomplete="nickname">
+        <label for="account-name">NAME</label>
+        <input id="account-name" name="name" type="text" maxlength="40" placeholder="Enter your name" required autocomplete="nickname">
         <label for="account-email">EMAIL</label>
         <input id="account-email" name="email" type="email" maxlength="120" placeholder="you@example.com" required autocomplete="email">
         <button type="submit" class="account-primary">CREATE LOCAL PROFILE</button>
       </form>
-      <div class="account-note">ДЕМО-РЕЖИМ · БЕЗ ПАРОЛЯ И ОНЛАЙН-РЕГИСТРАЦИИ</div>
+      <div class="account-note">DEMO MODE · NO PASSWORD OR ONLINE REGISTRATION</div>
     </div>
 
     <div id="account-user" class="account-panel" hidden>
@@ -996,7 +1000,7 @@ window.addEventListener('resize',()=>{
       <button type="button" id="account-favorites" class="account-primary">VIEW MY FAVORITES</button>
       <button type="button" id="account-logout" class="account-secondary">LOG OUT</button>
     </div>
-    <p class="account-disclaimer">Важно: сейчас это локальный демонстрационный профиль. Данные хранятся только в браузере на этом устройстве; полноценный вход с паролем, синхронизация между устройствами и безопасное хранение появятся после подключения сервера.</p>
+    <p class="account-disclaimer">Note: this is currently a local demo profile. Your data is stored only in this browser on this device. Secure sign-in, cross-device sync, and protected account storage will require a server.</p>
   </div>
 </section>
 <style>
@@ -1338,7 +1342,7 @@ function renderFavorites() {
   });
 
   if (favorites.length === 0) {
-    favoritesList.innerHTML = '<p style="color:#9296b8; grid-column:1/-1;">Пока здесь пусто. Нажми ♡ на понравившихся обоях.</p>';
+    favoritesList.innerHTML = '<p style="color:#9296b8; grid-column:1/-1;">Your favorites list is empty. Tap ♡ on any wallpaper you like.</p>';
   }
 }
 
@@ -1484,8 +1488,8 @@ renderFavorites();
     description.textContent=card.querySelector('p')?.textContent || '';
     if(mode==='premium'){
       tag.textContent='PREMIUM WALLPAPER · 4K';
-      description.textContent='Полная версия в разрешении 4K. Цена — 99 ₽, единоразовая покупка. Оплата пока не подключена.';
-      action.textContent='ПОНЯТНО';
+      description.textContent='Full version in 4K resolution. One-time purchase: 99 ₽. Payments are not connected yet.';
+      action.textContent='GOT IT';
     } else {
       tag.textContent='WALLPAPER PREVIEW';
       action.textContent='CLOSE PREVIEW';
@@ -1555,6 +1559,26 @@ renderFavorites();
   });
   window.addEventListener('storage', renderProfile);
   renderProfile();
+})();
+</script>
+
+<script>
+(() => {
+  const link = document.getElementById('account-nav-link');
+  const target = document.getElementById('account');
+  if (!link || !target) return;
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    if (window.location.hash !== '#account') {
+      history.pushState(null, '', '#account');
+    }
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Fallback for browsers/layouts where scrollIntoView is intercepted.
+    window.setTimeout(() => {
+      const top = target.getBoundingClientRect().top + window.pageYOffset - 95;
+      if (Math.abs(window.pageYOffset - top) > 8) window.scrollTo({ top, behavior: 'smooth' });
+    }, 250);
+  });
 })();
 </script>
 
