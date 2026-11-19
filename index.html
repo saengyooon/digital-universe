@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DIGITAL UNIVERSE — Space Wallpapers</title>
-<meta name="description" content="Explore a universe of space wallpapers. Get all premium wallpapers with one one-time payment.">
+<meta name="description" content="DIGITAL UNIVERSE — discover cinematic space wallpapers. One-time Premium all-access is planned.">
 <meta name="theme-color" content="#080716">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%239b7cff'/%3E%3Cstop offset='1' stop-color='%2349d8df'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%23080716'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='url(%23g)' stroke-width='3'/%3E%3Cellipse cx='32' cy='32' rx='27' ry='10' fill='none' stroke='%23d8c7ff' stroke-width='2' transform='rotate(-28 32 32)'/%3E%3Ccircle cx='49' cy='20' r='4' fill='%2349d8df'/%3E%3C/svg%3E">
 
@@ -1028,15 +1028,20 @@ window.addEventListener('resize',()=>{
     <div id="account-guest" class="account-panel">
       <div class="account-orbit">✦</div>
       <h3>WELCOME, EXPLORER</h3>
-      <p>Enter your name and email address. Your profile will be saved in this browser.</p>
+      <div class="auth-tabs" role="tablist" aria-label="Account access">
+        <button type="button" class="auth-tab active" id="auth-register-tab" aria-selected="true">CREATE ACCOUNT</button>
+        <button type="button" class="auth-tab" id="auth-login-tab" aria-selected="false">LOG IN</button>
+      </div>
       <form id="account-form" class="account-form">
-        <label for="account-name">NAME</label>
-        <input id="account-name" name="name" type="text" maxlength="40" placeholder="Enter your name" required autocomplete="nickname">
+        <div id="register-name-wrap"><label for="account-name">NAME</label><input id="account-name" name="name" type="text" maxlength="40" placeholder="Enter your name" autocomplete="nickname"></div>
         <label for="account-email">EMAIL</label>
         <input id="account-email" name="email" type="email" maxlength="120" placeholder="you@example.com" required autocomplete="email">
-        <button type="submit" class="account-primary">CREATE LOCAL PROFILE</button>
+        <label for="account-password">PASSWORD</label>
+        <input id="account-password" name="password" type="password" minlength="8" maxlength="128" placeholder="At least 8 characters" required autocomplete="new-password">
+        <button type="submit" class="account-primary" id="auth-submit">CREATE LOCAL ACCOUNT</button>
       </form>
-      <div class="account-note">DEMO MODE · NO PASSWORD OR ONLINE REGISTRATION</div>
+      <p id="auth-message" class="auth-message" role="status" aria-live="polite"></p>
+      <div class="account-note">LOCAL DEMO ONLY · NOT SECURE ONLINE AUTHENTICATION</div>
     </div>
 
     <div id="account-user" class="account-panel" hidden>
@@ -1059,7 +1064,7 @@ window.addEventListener('resize',()=>{
       <button type="button" id="account-favorites" class="account-primary">VIEW MY FAVORITES</button>
       <button type="button" id="account-logout" class="account-secondary">LOG OUT</button>
     </div>
-    <p class="account-disclaimer">Note: this is a local demo profile. Profile details and checkout requests are stored only in this browser on this device. Secure sign-in, order storage, cross-device sync, and protected downloads require a backend.</p>
+    <p class="account-disclaimer">Note: this is a local demo profile. Profile details and checkout requests are stored only in this browser on this device. This local demo login works only in this browser. Real secure authentication, cross-device accounts, payment checkout, and protected downloads require a backend and a configured payment provider.</p>
   </div>
 </section>
 <style>
@@ -1100,6 +1105,14 @@ window.addEventListener('resize',()=>{
 .account-order-status{color:#a78bfa;text-align:right;white-space:nowrap}
 
 @media(max-width:600px){.account-section{padding:65px 16px 80px}.account-panel{padding:28px 20px}}
+
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0 16px}
+.auth-tab{padding:12px 8px;border:1px solid #39315f;border-radius:9px;background:#0b0b20;color:#a9a2c8;font-size:10px;font-weight:700;letter-spacing:1.5px;cursor:pointer}
+.auth-tab.active{background:rgba(139,92,246,.2);border-color:#a78bfa;color:#fff;box-shadow:0 0 18px rgba(139,92,246,.12)}
+.auth-message{min-height:20px;margin:12px 0 0;color:#c4a2ff;font-size:12px;line-height:1.6}
+#register-name-wrap{display:grid;gap:10px}
+.account-form input:focus-visible,.auth-tab:focus-visible,.account-primary:focus-visible,.account-secondary:focus-visible{outline:2px solid #c4a2ff;outline-offset:3px}
+
 </style>
 <style>
 #space-gallery {
@@ -1598,6 +1611,8 @@ margin-top: 0;
   const closeButton = modal.querySelector('.du-modal-close');
   const downloadButton = document.getElementById('du-download-image');
   const checkoutOpen = document.getElementById('du-checkout-open');
+  // Set this to the real hosted checkout URL only after a merchant account is approved.
+  const PAYMENT_CHECKOUT_URL = ''; // intentionally blank: no real payment link is configured yet
   const checkoutForm = document.getElementById('du-checkout-form');
   const checkoutEmail = document.getElementById('du-checkout-email');
   const checkoutResult = document.getElementById('du-checkout-result');
@@ -1725,7 +1740,8 @@ margin-top: 0;
     requests.push(request);
     localStorage.setItem('du-checkout-requests', JSON.stringify(requests));
     checkoutForm.hidden = true;
-    checkoutResult.textContent = 'Your all-access request has been saved in this browser. It covers the entire Premium collection for one payment of 99 ₽. No payment was made and Premium access is not activated until a real payment provider is connected.';
+    checkoutResult.textContent = 'Your interest request has been saved in this browser. The planned offer is one-time 99 ₽ access to the entire Premium collection. No payment was made and no Premium access was activated. Online checkout is not configured yet.';
+    if (PAYMENT_CHECKOUT_URL) window.location.assign(PAYMENT_CHECKOUT_URL);
     checkoutResult.hidden = false;
     window.dispatchEvent(new Event('du-orders-updated'));
   });
@@ -1739,63 +1755,80 @@ margin-top: 0;
 <script>
 (() => {
   const PROFILE_KEY = 'du-local-profile';
+  const USERS_KEY = 'du-local-users';
   const guest = document.getElementById('account-guest');
   const user = document.getElementById('account-user');
   const form = document.getElementById('account-form');
   if (!guest || !user || !form) return;
+  const nameInput = document.getElementById('account-name');
+  const emailInput = document.getElementById('account-email');
+  const passwordInput = document.getElementById('account-password');
+  const nameWrap = document.getElementById('register-name-wrap');
+  const message = document.getElementById('auth-message');
+  const submit = document.getElementById('auth-submit');
+  const registerTab = document.getElementById('auth-register-tab');
+  const loginTab = document.getElementById('auth-login-tab');
+  let mode = 'register';
 
-  function readProfile(){
-    try { return JSON.parse(localStorage.getItem(PROFILE_KEY) || 'null'); }
-    catch(error){ return null; }
+  function readJSON(key, fallback){ try { const value=JSON.parse(localStorage.getItem(key)||'null'); return value ?? fallback; } catch(error){ return fallback; } }
+  function readProfile(){ return readJSON(PROFILE_KEY, null); }
+  function setMode(next){
+    mode=next; const registering=mode==='register';
+    nameWrap.hidden=!registering; nameInput.required=registering;
+    passwordInput.autocomplete=registering?'new-password':'current-password';
+    submit.textContent=registering?'CREATE LOCAL ACCOUNT':'LOG IN';
+    registerTab.classList.toggle('active',registering); loginTab.classList.toggle('active',!registering);
+    registerTab.setAttribute('aria-selected',String(registering)); loginTab.setAttribute('aria-selected',String(!registering));
+    message.textContent='';
+  }
+  async function passwordDigest(password, salt){
+    if(!window.crypto?.subtle) throw new Error('Secure password hashing is unavailable in this browser.');
+    const enc=new TextEncoder();
+    const key=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveBits']);
+    const bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt:enc.encode(salt),iterations:120000,hash:'SHA-256'},key,256);
+    return Array.from(new Uint8Array(bits)).map(b=>b.toString(16).padStart(2,'0')).join('');
   }
   function renderProfile(){
-    const profile = readProfile();
-    guest.hidden = !!profile;
-    user.hidden = !profile;
-    if(profile){
-      document.getElementById('account-greeting').textContent = 'WELCOME, ' + profile.name.toUpperCase();
-      document.getElementById('account-user-email').textContent = profile.email;
-      let favorites = [];
-      try { favorites = JSON.parse(localStorage.getItem('du-favorites') || '[]'); } catch(error) {}
-      document.getElementById('account-favorite-count').textContent = favorites.length;
-      const points = Number(localStorage.getItem('du-reward-points') || 0);
-      document.getElementById('account-reward-points').textContent = Number.isFinite(points) ? points : 0;
-      let orders = [];
-      try { orders = JSON.parse(localStorage.getItem('du-checkout-requests') || '[]'); } catch(error) {}
-      const orderList = document.getElementById('account-order-list');
-      orderList.innerHTML = '';
-      if (!orders.length) orderList.innerHTML = '<p class="account-empty-orders">No orders yet.</p>';
-      else orders.slice().reverse().slice(0,5).forEach(order => {
-        const row=document.createElement('div');row.className='account-order-row';
-        const details=document.createElement('div');
-        const name=document.createElement('strong');name.textContent=String(order.product || order.wallpaper || 'Wallpaper').replace(/-/g,' ').toUpperCase();
-        const date=document.createElement('small');date.textContent=order.createdAt?new Date(order.createdAt).toLocaleDateString():'Date unavailable';
-        details.append(name,date);
-        const status=document.createElement('span');status.className='account-order-status';status.textContent='ALL-ACCESS REQUEST';
-        row.append(details,status);orderList.appendChild(row);
-      });
-    }
+    const profile=readProfile(); guest.hidden=!!profile; user.hidden=!profile;
+    if(!profile) return;
+    document.getElementById('account-greeting').textContent='WELCOME, '+String(profile.name||'EXPLORER').toUpperCase();
+    document.getElementById('account-user-email').textContent=profile.email||'';
+    const favorites=readJSON('du-favorites',[]); document.getElementById('account-favorite-count').textContent=Array.isArray(favorites)?favorites.length:0;
+    const points=Number(localStorage.getItem('du-reward-points')||0); document.getElementById('account-reward-points').textContent=Number.isFinite(points)?points:0;
+    const orders=readJSON('du-checkout-requests',[]); const orderList=document.getElementById('account-order-list'); orderList.innerHTML='';
+    if(!Array.isArray(orders)||!orders.length) orderList.innerHTML='<p class="account-empty-orders">No orders yet.</p>';
+    else orders.slice().reverse().slice(0,5).forEach(order=>{const row=document.createElement('div');row.className='account-order-row';const details=document.createElement('div');const name=document.createElement('strong');name.textContent=String(order.product||'Premium access request').toUpperCase();const date=document.createElement('small');date.textContent=order.createdAt?new Date(order.createdAt).toLocaleDateString():'Date unavailable';details.append(name,date);const status=document.createElement('span');status.className='account-order-status';status.textContent='REQUEST SAVED';row.append(details,status);orderList.appendChild(row);});
   }
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    const name = document.getElementById('account-name').value.trim();
-    const email = document.getElementById('account-email').value.trim();
-    if(!name || !email) return;
-    localStorage.setItem(PROFILE_KEY, JSON.stringify({name, email}));
-    form.reset();
-    renderProfile();
+  registerTab.addEventListener('click',()=>setMode('register'));
+  loginTab.addEventListener('click',()=>setMode('login'));
+  form.addEventListener('submit',async event=>{
+    event.preventDefault(); message.textContent='';
+    const email=emailInput.value.trim().toLowerCase(); const password=passwordInput.value;
+    if(!email||password.length<8){message.textContent='Enter a valid email and a password with at least 8 characters.';return;}
+    submit.disabled=true; submit.textContent='PLEASE WAIT…';
+    try{
+      const users=readJSON(USERS_KEY,{}); const safeUsers=users&&typeof users==='object'&&!Array.isArray(users)?users:{};
+      if(mode==='register'){
+        const name=nameInput.value.trim(); if(!name){message.textContent='Please enter your name.';return;}
+        if(safeUsers[email]){message.textContent='An account with this email already exists. Choose LOG IN.';return;}
+        const salt=crypto.getRandomValues(new Uint8Array(16)); const saltHex=Array.from(salt).map(b=>b.toString(16).padStart(2,'0')).join('');
+        const hash=await passwordDigest(password,saltHex);
+        safeUsers[email]={name,salt:saltHex,hash}; localStorage.setItem(USERS_KEY,JSON.stringify(safeUsers));
+        localStorage.setItem(PROFILE_KEY,JSON.stringify({name,email})); message.textContent='Local demo account created.';
+      }else{
+        const record=safeUsers[email]; if(!record){message.textContent='No local account found for this email. Create an account first.';return;}
+        const hash=await passwordDigest(password,record.salt);
+        if(hash!==record.hash){message.textContent='Incorrect email or password.';return;}
+        localStorage.setItem(PROFILE_KEY,JSON.stringify({name:record.name,email})); message.textContent='Logged in on this device.';
+      }
+      passwordInput.value=''; renderProfile();
+    }catch(error){message.textContent=error.message||'Could not complete account action.';}
+    finally{submit.disabled=false;submit.textContent=mode==='register'?'CREATE LOCAL ACCOUNT':'LOG IN';}
   });
-  document.getElementById('account-logout').addEventListener('click', () => {
-    localStorage.removeItem(PROFILE_KEY);
-    renderProfile();
-  });
-  document.getElementById('account-favorites').addEventListener('click', () => {
-    document.getElementById('favorites').scrollIntoView({behavior:'smooth'});
-  });
-  window.addEventListener('storage', renderProfile);
-  window.addEventListener('du-orders-updated', renderProfile);
-  window.addEventListener('du-favorites-updated', renderProfile);
-  renderProfile();
+  document.getElementById('account-logout').addEventListener('click',()=>{localStorage.removeItem(PROFILE_KEY);renderProfile();setMode('login');});
+  document.getElementById('account-favorites').addEventListener('click',()=>document.getElementById('favorites').scrollIntoView({behavior:'smooth'}));
+  window.addEventListener('storage',renderProfile); window.addEventListener('du-orders-updated',renderProfile); window.addEventListener('du-favorites-updated',renderProfile);
+  setMode('register'); renderProfile();
 })();
 </script>
 
