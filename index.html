@@ -1564,8 +1564,8 @@ margin-top: 0;
 @supports not (height:100dvh){.du-modal.viewer-mode .du-modal-image{max-height:100vh}}
 .du-download-image{display:block;margin:18px auto 0;background:linear-gradient(100deg,#287c72,#36a995);border-color:#6ee7d4}
 .du-modal.viewer-mode{padding:0;background:rgba(0,0,0,.97);backdrop-filter:blur(8px)}
-.du-modal.viewer-mode .du-modal-panel{width:100%;height:100%;max-height:none;border:0;border-radius:0;background:#05050d;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
-.du-modal.viewer-mode .du-modal-image{display:block;width:100%;height:100%;max-height:100dvh;object-fit:contain;object-position:center;background:#05050d}
+.du-modal.viewer-mode .du-modal-panel{position:relative;width:100vw;height:100dvh;min-height:100vh;max-height:none;border:0;border-radius:0;background:#05050d;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.du-modal.viewer-mode .du-modal-image{display:block;flex:1 1 auto;width:100vw;height:100dvh;min-height:100vh;max-height:100dvh;object-fit:cover;object-position:center;background:#05050d}
 .du-modal.viewer-mode .du-modal-content{position:absolute;left:0;right:0;bottom:0;padding:22px 20px 26px;background:linear-gradient(transparent,rgba(3,4,12,.94) 28%);text-align:center}
 .du-modal.viewer-mode .du-modal-tag{font-size:9px}
 .du-modal.viewer-mode .du-modal-content h2{font-size:clamp(16px,3vw,24px);margin:8px 0}
@@ -1584,7 +1584,7 @@ margin-top: 0;
 .du-checkout-form .du-modal-action{width:100%}
 .du-checkout-disclaimer{font-size:11px!important;color:#aaa5c5!important;margin:12px 0!important}
 .du-checkout-result{max-width:430px;margin:18px auto 0;padding:15px;border:1px solid rgba(74,222,128,.35);background:rgba(22,101,52,.13);border-radius:10px;color:#bbf7d0!important;font-size:12px}
-@media(max-width:600px){.du-modal-panel{width:100%;max-height:96vh;border-radius:14px}.du-modal-content{padding:18px 16px 22px}.du-modal-image{height:52vh}.du-modal.viewer-mode .du-modal-image{height:100dvh}}
+@media(max-width:600px){.du-modal-panel{width:100%;max-height:96vh;border-radius:14px}.du-modal-content{padding:18px 16px 22px}.du-modal-image{height:52vh}.du-modal.viewer-mode .du-modal-panel{width:100vw;height:100dvh;min-height:100vh;max-height:none}.du-modal.viewer-mode .du-modal-image{width:100vw;height:100dvh;min-height:100vh;max-height:100dvh;object-fit:cover}}
 </style>
 <script>
 (() => {
