@@ -146,6 +146,17 @@ header{top:22px}
 .catalog-sort option{background:#080a16;color:white}
 @media(max-width:700px){.catalog-sort{width:100%}}
 
+
+/* REAL WALLPAPER IMAGES */
+#space-gallery .art-placeholder{
+  display:block;width:100%;height:auto;aspect-ratio:16/10;min-height:0;
+  object-fit:cover;object-position:center;border-radius:14px;background:#101027;cursor:zoom-in;
+}
+#space-gallery .art-card{min-width:0}
+#space-gallery .art-card h3{margin-top:19px}
+#space-gallery .art-card .favorite-btn{position:absolute;top:23px;right:23px;z-index:3}
+#space-gallery .gallery-grid{align-items:stretch}
+
 </style>
 </head>
 
@@ -679,71 +690,251 @@ window.addEventListener('resize',()=>{
         <option value="free-first">FREE FIRST</option>
         <option value="premium-first">PREMIUM FIRST</option>
       </select>
-      <div class="catalog-count" id="catalog-count">9 WALLPAPERS</div>
+      <div class="catalog-count" id="catalog-count">20 WALLPAPERS</div>
     </div>
-\n    <div class="gallery-grid">
+    <div class="gallery-grid">
 
-      <div class="art-card" data-category="free" data-title="nebula dream">
-  <button class="favorite-btn" data-id="nebula">♡</button>
-  <div class="art-placeholder nebula-bg"></div>
-  <h3>NEBULA DREAM</h3>
-  <p>Космическая туманность</p>
-  <div class="wallpaper-info">
-    <span>1920 × 1080 · FULL HD</span>
-    <span class="free-label">FREE</span>
-  </div>
-  <button class="download-btn">DOWNLOAD</button>
-</div>
+      <article class="art-card" data-category="free" data-title="nebula dream">
+        <button class="favorite-btn" data-id="nebula-dream" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/7NXCZTSL/2026-11-19-141759976.png" alt="NEBULA DREAM" loading="lazy" decoding="async">
+        <h3>NEBULA DREAM</h3>
+        <p>Сине-фиолетовая туманность и далёкие звёзды</p>
+        <div class="wallpaper-info">
+          <span>1920 × 1080 · FULL HD</span>
+          <span class="free-label">FREE</span>
+        </div>
+        <button class="download-btn">DOWNLOAD</button>
+      </article>
 
-      <div class="art-card" data-category="premium" data-title="unknown planet">
-  <button class="favorite-btn" data-id="planet">♡</button>
-  <div class="art-placeholder planet-bg"></div>
-  <h3>UNKNOWN PLANET</h3>
-  <p>Планета неизведанного мира</p>
-  <div class="wallpaper-info">
-    <span>3840 × 2160 · 4K</span>
-    <span class="premium-label">PREMIUM</span>
-  </div>
-  <button class="premium-btn">UNLOCK · 99 ₽</button>
-</div>
+      <article class="art-card" data-category="free" data-title="moon horizon">
+        <button class="favorite-btn" data-id="moon-horizon" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/zH42hnJH/2026-11-19-141900223.png" alt="MOON HORIZON" loading="lazy" decoding="async">
+        <h3>MOON HORIZON</h3>
+        <p>Лунный горизонт в сиянии далёких звёзд</p>
+        <div class="wallpaper-info">
+          <span>1920 × 1080 · FULL HD</span>
+          <span class="free-label">FREE</span>
+        </div>
+        <button class="download-btn">DOWNLOAD</button>
+      </article>
 
-      <div class="art-card" data-category="premium" data-title="galactic light">
-  <button class="favorite-btn" data-id="galaxy">♡</button>
-  <div class="art-placeholder galaxy-bg"></div>
-  <h3>GALACTIC LIGHT</h3>
-  <p>Свет далёкой галактики</p>
-  <div class="wallpaper-info">
-    <span>4K WALLPAPER</span>
-    <span class="premium-label">PREMIUM</span>
-  </div>
-  <button class="premium-btn">UNLOCK · 99 ₽</button>
-</div>
+      <article class="art-card" data-category="free" data-title="red planet">
+        <button class="favorite-btn" data-id="red-planet" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/Q3w28R5v/2026-11-19-142005868.png" alt="RED PLANET" loading="lazy" decoding="async">
+        <h3>RED PLANET</h3>
+        <p>Красная планета в глубинах космоса</p>
+        <div class="wallpaper-info">
+          <span>1920 × 1080 · FULL HD</span>
+          <span class="free-label">FREE</span>
+        </div>
+        <button class="download-btn">DOWNLOAD</button>
+      </article>
 
-      <div class="art-card" data-category="free" data-title="moon horizon">
-  <button class="favorite-btn" data-id="moon">♡</button><div class="art-placeholder moon-bg"></div>
-  <h3>MOON HORIZON</h3><p>Лунный горизонт и сияние звёзд</p><div class="wallpaper-info"><span>1920 × 1080 · FULL HD</span><span class="free-label">FREE</span></div><button class="download-btn">DOWNLOAD</button>
-</div>
-      <div class="art-card" data-category="premium" data-title="purple orbit">
-  <button class="favorite-btn" data-id="orbit">♡</button><div class="art-placeholder orbit-bg"></div>
-  <h3>PURPLE ORBIT</h3><p>Фиолетовый мир на орбите</p><div class="wallpaper-info"><span>3840 × 2160 · 4K</span><span class="premium-label">PREMIUM</span></div><button class="premium-btn">UNLOCK · 99 ₽</button>
-</div>
-      <div class="art-card" data-category="free" data-title="stellar cloud">
-  <button class="favorite-btn" data-id="cloud">♡</button><div class="art-placeholder cloud-bg"></div>
-  <h3>STELLAR CLOUD</h3><p>Облака звёздной пыли</p><div class="wallpaper-info"><span>1920 × 1080 · FULL HD</span><span class="free-label">FREE</span></div><button class="download-btn">DOWNLOAD</button>
-</div>
-      <div class="art-card" data-category="premium" data-title="deep space">
-  <button class="favorite-btn" data-id="deep">♡</button><div class="art-placeholder deep-bg"></div>
-  <h3>DEEP SPACE</h3><p>Глубины космоса и далёкие звёзды</p><div class="wallpaper-info"><span>3840 × 2160 · 4K</span><span class="premium-label">PREMIUM</span></div><button class="premium-btn">UNLOCK · 99 ₽</button>
-</div>
-      <div class="art-card" data-category="free" data-title="red planet">
-  <button class="favorite-btn" data-id="red">♡</button><div class="art-placeholder red-bg"></div>
-  <h3>RED PLANET</h3><p>Красный планетарный пейзаж</p><div class="wallpaper-info"><span>1920 × 1080 · FULL HD</span><span class="free-label">FREE</span></div><button class="download-btn">DOWNLOAD</button>
-</div>
-      <div class="art-card" data-category="premium" data-title="cosmic rings">
-  <button class="favorite-btn" data-id="rings">♡</button><div class="art-placeholder rings-bg"></div>
-  <h3>COSMIC RINGS</h3><p>Кольца газового гиганта</p><div class="wallpaper-info"><span>3840 × 2160 · 4K</span><span class="premium-label">PREMIUM</span></div><button class="premium-btn">UNLOCK · 99 ₽</button>
-</div>
+      <article class="art-card" data-category="free" data-title="stellar cloud">
+        <button class="favorite-btn" data-id="stellar-cloud" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/xqDRm0K6/2026-11-19-142050323.png" alt="STELLAR CLOUD" loading="lazy" decoding="async">
+        <h3>STELLAR CLOUD</h3>
+        <p>Облака звёздной пыли и космический свет</p>
+        <div class="wallpaper-info">
+          <span>1920 × 1080 · FULL HD</span>
+          <span class="free-label">FREE</span>
+        </div>
+        <button class="download-btn">DOWNLOAD</button>
+      </article>
 
+      <article class="art-card" data-category="free" data-title="saturn veil">
+        <button class="favorite-btn" data-id="saturn-veil" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/5hZMjtQL/2026-11-19-142142879.png" alt="SATURN VEIL" loading="lazy" decoding="async">
+        <h3>SATURN VEIL</h3>
+        <p>Величественная планета с кольцами</p>
+        <div class="wallpaper-info">
+          <span>1920 × 1080 · FULL HD</span>
+          <span class="free-label">FREE</span>
+        </div>
+        <button class="download-btn">DOWNLOAD</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="purple orbit">
+        <button class="favorite-btn" data-id="purple-orbit" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/tTJQnfd4/2026-11-19-142242152.png" alt="PURPLE ORBIT" loading="lazy" decoding="async">
+        <h3>PURPLE ORBIT</h3>
+        <p>Фиолетовая планета и светящиеся орбиты</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="event horizon">
+        <button class="favorite-btn" data-id="event-horizon" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/Cj0H7Y7/2026-11-19-142318396.png" alt="EVENT HORIZON" loading="lazy" decoding="async">
+        <h3>EVENT HORIZON</h3>
+        <p>Чёрная дыра и сияющий аккреционный диск</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="emerald nebula">
+        <button class="favorite-btn" data-id="emerald-nebula" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/wNRfMyPH/2026-11-19-142355696.png" alt="EMERALD NEBULA" loading="lazy" decoding="async">
+        <h3>EMERALD NEBULA</h3>
+        <p>Изумрудная туманность</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="solar crown">
+        <button class="favorite-btn" data-id="solar-crown" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/xqxpSkZZ/2026-11-19-142429084.png" alt="SOLAR CROWN" loading="lazy" decoding="async">
+        <h3>SOLAR CROWN</h3>
+        <p>Золотое сияние далёкой звезды</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="frozen world">
+        <button class="favorite-btn" data-id="frozen-world" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/Dg425hDT/2026-11-19-142458388.png" alt="FROZEN WORLD" loading="lazy" decoding="async">
+        <h3>FROZEN WORLD</h3>
+        <p>Ледяная планета в холодном свете</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="cosmic fire">
+        <button class="favorite-btn" data-id="cosmic-fire" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/9kGHg4bh/2026-11-19-142527260.png" alt="COSMIC FIRE" loading="lazy" decoding="async">
+        <h3>COSMIC FIRE</h3>
+        <p>Огненные облака и вспышки энергии</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="void">
+        <button class="favorite-btn" data-id="void" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/zTL2LCkr/2026-11-19-142603560.png" alt="VOID" loading="lazy" decoding="async">
+        <h3>VOID</h3>
+        <p>Минималистичный тёмный космос</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="galactic spiral">
+        <button class="favorite-btn" data-id="galactic-spiral" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/4gfD15LH/2026-11-19-142636439.png" alt="GALACTIC SPIRAL" loading="lazy" decoding="async">
+        <h3>GALACTIC SPIRAL</h3>
+        <p>Спиральная галактика и яркое ядро</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="twin moons">
+        <button class="favorite-btn" data-id="twin-moons" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/fdp56Ppt/2026-11-19-142706273.png" alt="TWIN MOONS" loading="lazy" decoding="async">
+        <h3>TWIN MOONS</h3>
+        <p>Две луны над далёким миром</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="celestial gate">
+        <button class="favorite-btn" data-id="celestial-gate" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/Lh0rsYhF/2026-11-19-142740947.png" alt="CELESTIAL GATE" loading="lazy" decoding="async">
+        <h3>CELESTIAL GATE</h3>
+        <p>Светящийся портал в космической пустоте</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="pink universe">
+        <button class="favorite-btn" data-id="pink-universe" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/Cs7QVKJp/2026-11-19-142828847.png" alt="PINK UNIVERSE" loading="lazy" decoding="async">
+        <h3>PINK UNIVERSE</h3>
+        <p>Розовая туманность и звёздная пыль</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="asteroid king">
+        <button class="favorite-btn" data-id="asteroid-king" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/kg36Sdhz/2026-11-19-142859787.png" alt="ASTEROID KING" loading="lazy" decoding="async">
+        <h3>ASTEROID KING</h3>
+        <p>Планета среди астероидного пояса</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="deep space">
+        <button class="favorite-btn" data-id="deep-space" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/dwfj62r6/2026-11-19-142935895.png" alt="DEEP SPACE" loading="lazy" decoding="async">
+        <h3>DEEP SPACE</h3>
+        <p>Глубокий синий космос и далёкие звёзды</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="last sunrise">
+        <button class="favorite-btn" data-id="last-sunrise" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/gNfLxDX/2026-11-19-143008204.png" alt="LAST SUNRISE" loading="lazy" decoding="async">
+        <h3>LAST SUNRISE</h3>
+        <p>Планета на фоне огромного солнца</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+      <article class="art-card" data-category="premium" data-title="cosmic rings">
+        <button class="favorite-btn" data-id="cosmic-rings" aria-label="Добавить в избранное">♡</button>
+        <img class="art-placeholder" src="https://i.ibb.co/9kMqfR9J/2026-11-19-143116563.png" alt="COSMIC RINGS" loading="lazy" decoding="async">
+        <h3>COSMIC RINGS</h3>
+        <p>Фантастическая планета с сияющими кольцами</p>
+        <div class="wallpaper-info">
+          <span>3840 × 2160 · 4K</span>
+          <span class="premium-label">PREMIUM</span>
+        </div>
+        <button class="premium-btn">UNLOCK · 99 ₽</button>
+      </article>
+
+    
     </div>
 
     <div class="gallery-footer">
@@ -1041,7 +1232,7 @@ margin-top: 0;
   .catalog-filter{flex:1;min-width:90px}
   .catalog-count{text-align:center}
 }
-\n.gallery-footer {
+.gallery-footer {
   margin-top: 65px;
   color: #777791;
   font-size: 11px;
@@ -1178,7 +1369,7 @@ renderFavorites();
   updateCatalog();
 })();
 </script>
-\n
+
 <!-- WALLPAPER PREVIEW / PREMIUM MODAL -->
 <div id="du-modal" class="du-modal" aria-hidden="true">
   <div class="du-modal-panel" role="dialog" aria-modal="true" aria-labelledby="du-modal-title">
@@ -1221,8 +1412,8 @@ renderFavorites();
   function show(card, mode){
     currentCard=card;
     const art=card.querySelector('.art-placeholder');
-    const bg=getComputedStyle(art).backgroundImage;
-    image.style.backgroundImage=bg;
+    const imageUrl=art.currentSrc || art.src;
+    image.style.backgroundImage='url("'+imageUrl+'")';
     title.textContent=card.querySelector('h3')?.textContent || 'WALLPAPER';
     description.textContent=card.querySelector('p')?.textContent || '';
     if(mode==='premium'){
@@ -1241,10 +1432,8 @@ renderFavorites();
     const freeButton=card.querySelector('.download-btn');
     if(freeButton){
       freeButton.addEventListener('click',()=>{
-        const bg=getComputedStyle(art).backgroundImage;
-        const match=bg.match(/url\(["']?(.*?)["']?\)/);
-        if(!match){show(card,'preview');return;}
-        const url=match[1];
+        const url=art.currentSrc || art.src;
+        if(!url){show(card,'preview');return;}
         const link=document.createElement('a');link.href=url;link.download=card.dataset.title.replace(/\s+/g,'-')+'.png';
         document.body.appendChild(link);link.click();link.remove();
       });
